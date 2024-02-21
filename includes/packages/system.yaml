@@ -1,0 +1,21 @@
+system:
+  automation:
+    - alias: "[System] Nightly Full Backup"
+      trigger:
+        platform: time
+        at: "04:30:00"
+      condition:
+        condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+          - sat
+          - sun
+      action:
+        - service: hassio.backup_full
+          data:
+            compressed: true
+            name: Full_Backup_{{ now().strftime('%Y-%m-%d') }}

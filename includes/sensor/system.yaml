@@ -1,0 +1,133 @@
+- platform: time_date
+  display_options:
+    - "time"
+    - "date"
+    - "time_date"
+
+- platform: template
+  sensors:
+    sun_next_rising:
+      friendly_name: "Подъем солнца"
+      value_template: >
+        {% if state_attr('sun.sun', 'elevation') | float < 0 %}
+          {{ state_attr('sun.sun', 'next_rising') }}
+        {% else %}
+          unavailable
+        {% endif %}
+    sun_next_setting:
+      friendly_name: "Заход солнца"
+      value_template: >
+        {% if state_attr('sun.sun', 'elevation') | float >= 0 %}
+          {{ state_attr('sun.sun', 'next_setting') }}
+        {% else %}
+          unavailable
+        {% endif %}
+    nextsunrise:
+      entity_id: sun.sun
+      friendly_name: "Next Sunrise"
+      value_template: >
+        {{ as_timestamp(states.sun.sun.attributes.next_rising) | timestamp_custom('%H:%M') }}
+      icon_template: mdi:weather-sunset-up
+    nextsunset:
+      entity_id: sun.sun
+      friendly_name: "Next Sunset"
+      value_template: >
+        {{ as_timestamp(states.sun.sun.attributes.next_setting) | timestamp_custom('%H:%M') }}
+      icon_template: mdi:weather-sunset-down
+    sun_elevation:
+      entity_id: sun.sun
+      friendly_name: "Sun Elevation"
+      value_template: >
+        {{  state_attr('sun.sun', 'elevation') | float }}
+      icon_template: mdi:elevation-rise
+    nighttime:
+      entity_id: sun.sun
+      friendly_name: "Sun Availability"
+      value_template: >
+        {% if state_attr('sun.sun', 'elevation') | float >= 0 %}
+          40
+        {% else %}
+          -40
+        {% endif %}
+      icon_template: mdi:elevation-rise
+
+- platform: systemmonitor
+  resources:
+    - type: processor_use
+    - type: disk_use_percent
+      arg: /
+    - type: memory_use_percent
+    - type: last_boot
+    - type: disk_free
+      arg: /
+
+- platform: sql
+  db_url: !secret recorder_db_url
+  queries:
+    - name: Maria DB size
+      query: 'SELECT table_schema "database", Round(Sum(data_length + index_length) / 1048576, 2) "value" FROM information_schema.tables WHERE table_schema="homeassistant" GROUP BY table_schema;'
+      column: "value"
+      unit_of_measurement: MB
+
+#   - platform: uptime
+#     name: online
+# unit_of_measurement: minutes
+
+- platform: template
+  sensors:
+    online_custom:
+      friendly_name: "Home Assistant в онлайне"
+      value_template: >
+        {% set uptime = as_timestamp (now()) -as_timestamp(states('sensor.online')) | int %}
+        {% set minutes = (( uptime % 3600) / 60) | int %}
+        {% set hours = ((uptime % 86400) / 3600) | int %}
+        {% set days = (uptime / 86400) | int %}
+          {% if minutes < 1 and hours < 1 %}
+            Меньше минуты
+          {% else %}
+            {% if days > 0 %}
+              {{ days }} д.
+            {% endif %}
+            {% if hours > 0 %}
+              {% if days > 0 %}
+                {{ ' ' }}
+              {% endif %}
+              {{ hours }} ч.
+            {% endif %}
+            {% if minutes > 0 %}
+              {% if days > 0 or hours > 0 %}
+                {{ ' ' }}
+              {% endif %}
+                {{ minutes }} мин.
+            {% endif %}
+          {% endif %}
+      icon_template: mdi:clock
+
+    # Время с последней перезагрузки
+    last_boot_custom:
+      friendly_name: "Сервер в онлайне"
+      value_template: >
+        {% set uptime = as_timestamp (now()) -as_timestamp(states('sensor.last_boot')) | int %}
+        {% set minutes = (( uptime % 3600) / 60) | int %}
+        {% set hours = ((uptime % 86400) / 3600) | int %}
+        {% set days = (uptime / 86400) | int %}
+          {% if minutes < 1 and hours < 1%}
+            Меньше минуты
+          {% else %}
+            {% if days > 0 %}
+              {{ days }} д.
+            {% endif %}
+            {% if hours > 0 %}
+              {% if days > 0 %}
+                {{ ' ' }}
+              {% endif %}
+              {{ hours }} ч.
+            {% endif %}
+            {% if minutes > 0 %}
+              {% if days > 0 or hours > 0 %}
+                {{ ' ' }}
+              {% endif %}
+                {{ minutes }} мин.
+            {% endif %}
+          {% endif %}
+      icon_template: mdi:clock

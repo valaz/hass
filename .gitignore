@@ -1,0 +1,41 @@
+# Example .gitignore file for your config dir.
+# An * ensures that everything will be ignored.
+
+# You can whitelist files/folders with !, these will not be ignored.
+!*.yaml
+!.gitignore
+!*.md
+!includes/*
+
+# Ignore folders.
+.storage
+.cloud
+.google.token
+.omv_cookies.json
+
+home-assistant.log
+home-assistant_v2.db
+
+
+# Ensure these YAML files are ignored, otherwise your secret data/credentials will leak.
+ip_bans.yaml
+secrets.yaml
+known_devices.yaml
+
+ultron.key
+
+www/cam_captures/**
+zigbee2mqtt/log/**
+zigbee2mqtt/state.json
+
+secrets.yaml
+known_devices.yaml
+home-assistant.*
+home-assistant_v2.db
+zigbee2mqtt/*
+!zigbee2mqtt/configuration.yaml
+tts/*
+node-red/*
+.storage/*
+custom_components/*
+www/*

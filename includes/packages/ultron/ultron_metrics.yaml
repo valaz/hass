@@ -1,0 +1,139 @@
+ultron_metrics:
+  sensor:
+    - platform: influxdb
+      host: !secret influxdb_host
+      username: !secret influxdb_username
+      password: !secret influxdb_password
+      queries:
+        - name: Ultron CPU Temperature
+          unit_of_measurement: °C
+          value_template: "{{ value | round(1) }}"
+          group_function: last
+          where: '"sensor" = ''coretemp_packageid0_input'' AND "host" = ''ultron'''
+          measurement: '"temp"'
+          field: temp
+          database: homelab_telegraf
+
+        - name: Ultron CPU usage
+          unit_of_measurement: "%"
+          value_template: "{{ ( value | float * (-1) | float + 100 )| round(2) }}"
+          group_function: last
+          where: '"cpu" = ''cpu-total'' AND "host" = ''ultron'''
+          measurement: '"cpu"'
+          field: usage_idle
+          database: homelab_telegraf
+
+        - name: Ultron iGPU usage
+          unit_of_measurement: "%"
+          value_template: "{{ value | round(2) }}"
+          group_function: last
+          where: '"host" = ''ultron'''
+          measurement: '"exec"'
+          field: intel_gpu_util
+          database: homelab_telegraf
+
+        - name: Ultron RAM usage
+          unit_of_measurement: "%"
+          value_template: "{{ value | round(2) }}"
+          group_function: last
+          where: '"host" = ''ultron'''
+          measurement: '"mem"'
+          field: used_percent
+          database: homelab_telegraf
+
+        - name: Ultron SWAP usage
+          unit_of_measurement: "%"
+          value_template: "{{ value | round(2) }}"
+          group_function: last
+          where: '"host" = ''ultron'''
+          measurement: '"swap"'
+          field: used_percent
+          database: homelab_telegraf
+
+        - name: Ultron Parity Disk Temperature
+          unit_of_measurement: °C
+          value_template: "{{ value | round(2) }}"
+          group_function: last
+          where: '"serial_no" = ''9MGWL7YJ'' AND "host" = ''ultron'''
+          measurement: '"smart_device"'
+          field: temp_c
+          database: homelab_telegraf
+
+        - name: Ultron Disk 1 Temperature
+          unit_of_measurement: °C
+          value_template: "{{ value | round(2) }}"
+          group_function: last
+          where: '"serial_no" = ''9KGVHS3L'' AND "host" = ''ultron'''
+          measurement: '"smart_device"'
+          field: temp_c
+          database: homelab_telegraf
+
+        - name: Ultron Disk 2 Temperature
+          unit_of_measurement: °C
+          value_template: "{{ value | round(2) }}"
+          group_function: last
+          where: '"serial_no" = ''Y5KU0P3C'' AND "host" = ''ultron'''
+          measurement: '"smart_device"'
+          field: temp_c
+          database: homelab_telegraf
+
+        - name: Ultron Cache Temperature
+          unit_of_measurement: °C
+          value_template: "{{ value | round(2) }}"
+          group_function: last
+          where: '"serial_no" = ''S5Y1NZ0R522193Z'' AND "host" = ''ultron'''
+          measurement: '"smart_device"'
+          field: temp_c
+          database: homelab_telegraf
+
+        - name: Ultron Cache 2 Temperature
+          unit_of_measurement: °C
+          value_template: "{{ value | round(2) }}"
+          group_function: last
+          where: '"serial_no" = ''S6PXNM0T202704D'' AND "host" = ''ultron'''
+          measurement: '"smart_device"'
+          field: temp_c
+          database: homelab_telegraf
+
+        - name: Ultron 870 Evo Temperature
+          unit_of_measurement: °C
+          value_template: "{{ value | round(2) }}"
+          group_function: last
+          where: '"serial_no" = ''S6PNNJ0RB02641R'' AND "host" = ''ultron'''
+          measurement: '"smart_device"'
+          field: temp_c
+          database: homelab_telegraf
+
+        - name: Ultron Network In Total
+          unit_of_measurement: "MB"
+          value_template: "{{ value | float / 1000000 | round(2) }}"
+          group_function: last
+          where: '"host" = ''ultron'' AND "interface" = ''eth0'''
+          measurement: '"net"'
+          field: bytes_recv
+          database: homelab_telegraf
+
+        - name: Ultron Network Out Total
+          unit_of_measurement: "MB"
+          value_template: "{{ value | float / 1000000 | round(2) }}"
+          group_function: last
+          where: '"host" = ''ultron'' AND "interface" = ''eth0'''
+          measurement: '"net"'
+          field: bytes_sent
+          database: homelab_telegraf
+
+    - platform: derivative
+      source: sensor.ultron_network_in_total
+      name: Ultron Network In Speed
+      round: 2
+      unit_time: s
+      #unit: MB/s
+      time_window: "00:00:01"
+
+    - platform: derivative
+      source: sensor.ultron_network_out_total
+      name: Ultron Network Out Speed
+      round: 2
+      unit_time: s
+      #unit: MB/s
+      time_window: "00:00:01"

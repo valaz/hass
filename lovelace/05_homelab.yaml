@@ -1,0 +1,483 @@
+title: Homelab
+icon: mdi:server-network
+cards:
+  - type: vertical-stack
+    cards:
+      - type: custom:vertical-stack-in-card
+        title: Ultron
+        cards:
+          - type: entities
+            entities:
+              - type: weblink
+                name: "Ultron Admin Panel"
+                url: http://192.168.1.11/
+                icon: mdi:database
+              - switch.ultron_server
+
+          - type: custom:auto-entities
+            card:
+              type: entities
+              show_header_toggle: false
+            filter:
+              include:
+                - name: "VM *"
+            sort:
+              method: name
+            show_empty: true
+          - type: glance
+            columns: 2
+            entities:
+              - entity: sensor.ultron_glances_containers_cpu_used
+                name: "CPU"
+              - entity: sensor.ultron_glances_containers_ram_used
+                name: "RAM"
+
+          - type: custom:auto-entities
+            card:
+              type: entities
+              show_header_toggle: false
+            filter:
+              include:
+                - name: "Docker *"
+            sort:
+              method: name
+            show_empty: true
+
+      - type: custom:vertical-stack-in-card
+        title: Ultron Power
+        cards:
+          - type: custom:mini-graph-card
+            name: "Потребление сервера"
+            animate: true
+            hour24: true
+            line_color: "#f39c12"
+            hours_to_show: 24
+            points_per_hour: 12
+            update_interval: 300
+            line_width: 3
+            entities:
+              - entity: sensor.server_rozetka_current_power
+
+          - type: entities
+            entities:
+              - entity: sensor.server_rozetka_today_energy
+                name: Потрачено сегодня
+              - entity: sensor.server_rozetka_month_energy
+                name: Потрачено в этом месяце
+
+  - type: vertical-stack
+    cards:
+      - type: custom:vertical-stack-in-card
+        title: Ultron Metrics
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: "CPU"
+                animate: true
+                hour24: true
+                color_thresholds:
+                  - value: 35
+                    color: "#539652"
+                  - value: 70
+                    color: "#f39c12"
+                  - value: 90
+                    color: "#c0392b"
+                hours_to_show: 24
+                points_per_hour: 12
+                update_interval: 30
+                entities:
+                  - entity: sensor.ultron_glances_cpu_used
+              - type: custom:mini-graph-card
+                entities:
+                  - entity: sensor.ultron_glances_package_id_0_temperature
+                name: "Температура процессора"
+                animate: true
+                hour24: true
+                color_thresholds:
+                  - value: 60
+                    color: "#539652"
+                  - value: 80
+                    color: "#f39c12"
+                  - value: 90
+                    color: "#c0392b"
+                hours_to_show: 1
+                points_per_hour: 60
+                update_interval: 10
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: "iGPU"
+                animate: true
+                hour24: true
+                color_thresholds:
+                  - value: 35
+                    color: "#539652"
+                  - value: 70
+                    color: "#f39c12"
+                  - value: 90
+                    color: "#c0392b"
+                hours_to_show: 24
+                points_per_hour: 12
+                update_interval: 30
+                entities:
+                  - entity: sensor.ultron_igpu_usage
+              - type: custom:mini-graph-card
+                name: "RAM"
+                animate: true
+                hour24: true
+                color_thresholds:
+                  - value: 35
+                    color: "#539652"
+                  - value: 80
+                    color: "#f39c12"
+                  - value: 90
+                    color: "#c0392b"
+                hours_to_show: 24
+                points_per_hour: 12
+                update_interval: 30
+                entities:
+                  - entity: sensor.ultron_glances_ram_used_percent
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: "Скорость загрузки"
+                animate: true
+                hour24: true
+                color_thresholds:
+                  - value: 4
+                    color: "#95d5b2"
+                  - value: 7
+                    color: "#52b788"
+                  - value: 10
+                    color: "#1b4332"
+                hours_to_show: 1
+                points_per_hour: 60
+                update_interval: 10
+                entities:
+                  - entity: sensor.ultron_network_in_speed
+              - type: custom:mini-graph-card
+                name: "Скорость выгрузки"
+                animate: true
+                hour24: true
+                color_thresholds:
+                  - value: 4
+                    color: "#ffba08"
+                  - value: 7
+                    color: "#f48c06"
+                  - value: 10
+                    color: "#d00000"
+                hours_to_show: 1
+                points_per_hour: 60
+                update_interval: 10
+                entities:
+                  - entity: sensor.ultron_network_out_speed
+
+      - type: custom:vertical-stack-in-card
+        title: Ultron Disks
+        cards:
+          - type: entities
+            entities:
+              - script.ultron_disks_spinup
+
+          - type: entities
+            entities:
+              - type: custom:multiple-entity-row
+                entity: sensor.ultron_parity_status
+                name: "Parity-Check"
+                entities:
+                  - entity: sensor.ultron_parity_finish_timestamp
+                    name: "Завершение"
+                    format: relative
+                    hide_unavailable: true
+                  - entity: sensor.ultron_parity_speed
+                    name: "Скорость"
+                    hide_if: 0
+                  - entity: sensor.ultron_parity_progress
+                    name: "Завершено"
+                    format: precision2
+                    hide_if: 100
+
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Parity
+                entities:
+                  - sensor.ultron_parity_disk_temperature
+                hour24: true
+                show:
+                  graph: false
+                  icon: true
+                  extrema: true
+                  fill: false
+                align_state: center
+              - type: custom:mini-graph-card
+                name: Disk 1
+                entities:
+                  - sensor.ultron_disk_1_temperature
+                hour24: true
+                show:
+                  graph: false
+                  icon: true
+                  extrema: true
+                  fill: false
+                align_state: center
+              - type: custom:mini-graph-card
+                name: Disk 2
+                entities:
+                  - sensor.ultron_disk_2_temperature
+                hour24: true
+                show:
+                  graph: false
+                  icon: true
+                  extrema: true
+                  fill: false
+                align_state: center
+
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Cache
+                entities:
+                  - sensor.ultron_cache_temperature
+                hour24: true
+                show:
+                  graph: false
+                  icon: true
+                  extrema: true
+                  fill: false
+                align_state: center
+              - type: custom:mini-graph-card
+                name: Cache 2
+                entities:
+                  - sensor.ultron_cache_2_temperature
+                hour24: true
+                show:
+                  graph: false
+                  icon: true
+                  extrema: true
+                  fill: false
+                align_state: center
+
+          # - type: conditional
+          #   conditions:
+          #     - entity: binary_sensor.ultron_parity_check_in_progress
+          #       state: "on"
+          #   card:
+          #     type: horizontal-stack
+          #     cards:
+          #       - type: entities
+          #         show_header_toggle: false
+          #         entities:
+          #           - entity: sensor.ultron_parity_status
+          #           - entity: sensor.ultron_parity_progress
+          #             name: "Current position:"
+          #           - entity: sensor.ultron_parity_speed
+          #             name: "Estimated speed:"
+          #           - entity: sensor.ultron_parity_finish_timestamp
+          #             name: "Estimated finish:"
+          #         theme: default
+          #         title: Parity Check
+
+      - type: custom:vertical-stack-in-card
+        title: Disks Usage
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: Disk 1
+                entities:
+                  - sensor.ultron_glances_mnt_disk1_used_percent
+                hour24: true
+                show:
+                  graph: false
+                  icon: true
+                  extrema: true
+                  fill: false
+                align_state: center
+              - type: custom:mini-graph-card
+                name: Disk 2
+                entities:
+                  - sensor.ultron_glances_mnt_disk2_used_percent
+                hour24: true
+                show:
+                  graph: false
+                  icon: true
+                  extrema: true
+                  fill: false
+                align_state: center
+
+  - type: vertical-stack
+    cards:
+      - type: custom:vertical-stack-in-card
+        title: "Asus Router"
+        cards:
+          - type: entities
+            entities:
+              - type: weblink
+                name: "Asus Admin Panel"
+                url: https://valaz.asuscomm.com:8443/
+                icon: mdi:router-wireless-settings
+          - type: divider
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: "Скорость загрузки"
+                animate: true
+                hour24: true
+                color_thresholds:
+                  - value: 35
+                    color: "#539652"
+                  - value: 50
+                    color: "#f39c12"
+                  - value: 80
+                    color: "#c0392b"
+                hours_to_show: 1
+                points_per_hour: 60
+                update_interval: 10
+                entities:
+                  - entity: sensor.192_168_1_1_download_speed
+              - type: custom:mini-graph-card
+                name: "Скорость выгрузки"
+                animate: true
+                hour24: true
+                color_thresholds:
+                  - value: 35
+                    color: "#ffba08"
+                  - value: 50
+                    color: "#f48c06"
+                  - value: 80
+                    color: "#d00000"
+                hours_to_show: 1
+                points_per_hour: 60
+                update_interval: 10
+                entities:
+                  - entity: sensor.192_168_1_1_upload_speed
+      #   - type: glance
+      #     columns: 4
+      #     title: 'Устройства в сети'
+      #     entities:
+      #       - entity: sensor.asuswrt_devices_connected
+      #         name: 'Количество'
+      #         icon: mdi:account-multiple
+      #       - entity: device_tracker.iphone_12_az
+      #         name: 'iPhone Азат'
+      #         icon: mdi:cellphone
+      #       - entity: device_tracker.ipad_6_az
+      #         name: 'Планшет Азат'
+      #         icon: mdi:tablet
+      #       - entity: device_tracker.deskmini
+      #         name: 'Deskmini'
+      #         icon: mdi:desktop-tower
+      #       - entity: device_tracker.mbp15
+      #         name: 'Макбук'
+      #         icon: mdi:laptop
+      #       - entity: device_tracker.iphone_elia
+      #         name: 'iPhone Эля'
+      #         icon: mdi:cellphone
+      #       - entity: device_tracker.huawei_mediapad_m5_lite_9
+      #         name: 'Планшет Эля'
+      #         icon: mdi:tablet
+      - type: custom:vertical-stack-in-card
+        title: "Pi-hole"
+        cards:
+          - type: entities
+            entities:
+              - type: weblink
+                name: "Pi-hole Panel"
+                url: http://192.168.1.42/admin/index.php
+                icon: mdi:pi-hole
+              - entity: switch.pi_hole
+                name: Вкл/Выкл
+              - entity: timer.pihole
+                name: Таймер
+          - type: glance
+            columns: 4
+            title: "Статистика"
+            show_name: false
+            entities:
+              - entity: sensor.pi_hole_dns_queries_today
+                name: "Всего запросов"
+              - entity: sensor.pi_hole_ads_blocked_today
+                name: "Заблокированых запросов"
+              - entity: sensor.pi_hole_ads_percentage_blocked_today
+                name: "Процент блокировки"
+              - entity: sensor.pi_hole_domains_blocked
+                name: "Заблокированных доменов"
+              - entity: sensor.pi_hole_seen_clients
+                name: "Всего клиентов"
+              - entity: sensor.pi_hole_dns_unique_clients
+                name: "Уникальных клиентов"
+
+      - type: custom:vertical-stack-in-card
+        title: "Transmission"
+        cards:
+          - type: entities
+            entities:
+              - type: weblink
+                name: "Transmission Panel"
+                url: http://192.168.1.11:9091/transmission/web/
+                icon: mdi:download-box
+              - entity: switch.transmission_switch
+                name: Вкл/Выкл
+              - entity: switch.transmission_turtle_mode
+                name: Замедленный режим
+          - type: divider
+          - type: horizontal-stack
+            cards:
+              - type: custom:mini-graph-card
+                name: "Скорость загрузки"
+                animate: true
+                hour24: true
+                color_thresholds:
+                  - value: 4
+                    color: "#95d5b2"
+                  - value: 7
+                    color: "#52b788"
+                  - value: 10
+                    color: "#1b4332"
+                hours_to_show: 1
+                points_per_hour: 60
+                update_interval: 10
+                entities:
+                  - entity: sensor.transmission_down_speed
+              - type: custom:mini-graph-card
+                name: "Скорость выгрузки"
+                animate: true
+                hour24: true
+                color_thresholds:
+                  - value: 4
+                    color: "#ffba08"
+                  - value: 7
+                    color: "#f48c06"
+                  - value: 10
+                    color: "#d00000"
+                hours_to_show: 1
+                points_per_hour: 60
+                update_interval: 10
+                entities:
+                  - entity: sensor.transmission_up_speed
+          - type: divider
+          - type: custom:transmission-card
+            hide_header: true
+            hide_type: false
+            default_type: "active"
+          - type: divider
+          - type: glance
+            columns: 5
+            entities:
+              - entity: sensor.transmission_total_torrents
+                name: "Всего"
+                # icon: mdi:download-multiple
+              - entity: sensor.transmission_active_torrents
+                name: "Активно"
+                # icon: mdi:progress-download
+              - entity: sensor.transmission_completed_torrents
+                name: "Завершено"
+                # icon: mdi:download-circle
+              - entity: sensor.transmission_started_torrents
+                name: "Начато"
+                # icon: mdi:play
+              - entity: sensor.transmission_paused_torrents
+                name: "На паузе"
+                # icon: mdi:pause

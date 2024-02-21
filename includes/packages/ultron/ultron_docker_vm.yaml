@@ -1,0 +1,135 @@
+# ultron_docker_vm:
+#   command_line:
+#     - switch:
+#         unique_id: ultron_server
+#         name: "Ultron Server"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 start"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 shutdown -h now"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 echo 0 "
+#         icon: mdi:server
+
+#     - switch:
+#         unique_id: vm_htpc
+#         name: "VM HTPC"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh start HTPC"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh shutdown HTPC"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh list --all | grep HTPC | awk '{print $3$4}' "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:microsoft-windows
+
+#     - switch:
+#         unique_id: vm_fedora
+#         name: "VM Fedora"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh start Fedora"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh shutdown Fedora"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh list --all | grep Fedora | awk '{print $3$4}' "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:fedora
+
+#     - switch:
+#         unique_id: docker_transmission
+#         name: "Docker Transmission"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start transmission"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop transmission"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect transmission | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_transmission_telegram
+#         name: "Docker Transmission-Telegram"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start transmission-telegram"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop transmission-telegram"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect transmission-telegram | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_homebridge
+#         name: "Docker Homebridge"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start homebridge"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop homebridge"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect homebridge | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_telegraf
+#         name: "Docker telegraf"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start telegraf"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop telegraf"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect telegraf | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_android_debug_bridge
+#         name: "Docker AndroidDebugBridge"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start AndroidDebugBridge"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop AndroidDebugBridge"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect AndroidDebugBridge | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_nextcloud
+#         name: "Docker Nextcloud"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start nextcloud"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop nextcloud"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect nextcloud | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_plex
+#         name: "Docker Plex"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start plex"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop plex"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect plex | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_radarr
+#         name: "Docker Radarr"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start radarr"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop radarr"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect radarr | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_syncthing
+#         name: "Docker Syncthing"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start syncthing"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop syncthing"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect syncthing | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_glances
+#         name: "Docker Glances"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start glances"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop glances"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect glances | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_honeygain
+#         name: "Docker Honeygain"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start honeygain"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop honeygain"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect honeygain | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker
+
+#     - switch:
+#         unique_id: docker_traffmonetizer
+#         name: "Docker Traffmonetizer"
+#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start traffmonetizer"
+#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop traffmonetizer"
+#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect traffmonetizer | jq '.[0].State.Status' -r "
+#         value_template: '{{ value == "running" }}'
+#         icon: mdi:docker

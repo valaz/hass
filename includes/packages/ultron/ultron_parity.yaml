@@ -1,0 +1,123 @@
+ultron_parity:
+  # command_line:
+  #   - sensor:
+  #       unique_id: ultron_parity_common_size_raw
+  #       name: "Ultron Parity Common Size Raw"
+  #       command: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} mdcmd status | sed -n 's/mdResyncSize=//p'"
+
+  #   - sensor:
+  #       unique_id: ultron_parity_size_raw
+  #       name: "Ultron Parity Size Raw"
+  #       command: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} mdcmd status | sed -n 's/mdResync=//p'"
+
+  #   - sensor:
+  #       unique_id: ultron_parity_pos_row
+  #       name: "Ultron Parity Pos Raw"
+  #       command: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} mdcmd status | sed -n 's/mdResyncPos=//p'"
+
+  #   - sensor:
+  #       unique_id: ultron_parity_dt_raw
+  #       name: "Ultron Parity Dt Raw"
+  #       command: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} mdcmd status | sed -n 's/mdResyncDt=//p'"
+
+  #   - sensor:
+  #       unique_id: ultron_parity_db_raw
+  #       name: "Ultron Parity Db Raw"
+  #       command: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} mdcmd status | sed -n 's/mdResyncDb=//p'"
+
+  sensor:
+    - platform: template
+      sensors:
+        ultron_parity_progress:
+          unit_of_measurement: "%"
+          value_template: >
+            {% set parity_common_size = states('sensor.ultron_parity_common_size_raw') | int %}
+            {% set parity_size = states('sensor.ultron_parity_size_raw') | int %}
+            {% set parity_pos = states('sensor.ultron_parity_pos_raw') | int %}
+            {% if parity_size == 0 %}
+              {% if parity_pos == 0 %}
+                100
+              {% else %}
+                {{ (parity_pos / parity_common_size * 100)| float | round(2) }}
+              {% endif %}
+            {% else %}
+              {{ (parity_pos / parity_size * 100) | float | round(2)  }}
+            {% endif %}
+          availability_template: >
+            {% set valid_parity_common_size = states('sensor.ultron_parity_common_size_raw') | int(0) > 0 %}
+            {% set valid_parity_size = states('sensor.ultron_parity_size_raw') | int(-1) >= 0 %}
+            {% set valid_parity_pos = states('sensor.ultron_parity_pos_raw') | int(-1) >= 0 %}
+            {{ valid_parity_common_size and valid_parity_size and valid_parity_pos }}
+
+        ultron_parity_speed:
+          device_class: data_rate
+          unit_of_measurement: "MB/s"
+          value_template: >
+            {% set parity_db = states('sensor.ultron_parity_db_raw') | int %}
+            {% set parity_dt = states('sensor.ultron_parity_dt_raw') | int %}
+            {% if parity_dt == 0 %}
+              0
+            {% else %}
+              {{ (parity_db / parity_dt * 1024 / 1e6) | round(1) }}
+            {% endif %}
+          availability_template: >
+            {% set valid_parity_db = states('sensor.ultron_parity_db_raw') | int(-1) >= 0 %}
+            {% set valid_parity_dt = states('sensor.ultron_parity_dt_raw') | int(-1) >= 0 %}
+            {{ valid_parity_db and valid_parity_dt }}
+
+        ultron_parity_finish_timestamp:
+          device_class: timestamp
+          value_template: >
+            {% set parity_db = states('sensor.ultron_parity_db_raw') | float %}
+            {% set parity_dt = states('sensor.ultron_parity_dt_raw') | float %}
+            {% set parity_size = states('sensor.ultron_parity_size_raw') | float %}
+            {% set parity_pos = states('sensor.ultron_parity_pos_raw') | float %}
+            {% set seconds = ((parity_size - parity_pos) * parity_dt / parity_db) | round(0) %}
+            {{ now() + timedelta(seconds=seconds) }}
+          availability_template: >
+            {% set valid_parity_db = states('sensor.ultron_parity_db_raw') | int(0) > 0 %}
+            {% set valid_parity_size = states('sensor.ultron_parity_size_raw') | int(0) > 0 %}
+            {{ valid_parity_db and valid_parity_size }}
+
+        ultron_parity_status:
+          value_template: >
+            {% set in_progress = is_state('binary_sensor.ultron_parity_check_in_progress', 'on') %}
+            {% set paused = is_state('binary_sensor.ultron_parity_check_paused', 'on') %}
+            {% if paused %}
+              Пауза
+            {% elif in_progress %}
+              Выполняется
+            {% else %}
+              Завершено
+            {% endif %}
+          icon_template: >
+            {% set status = states('sensor.ultron_parity_status') %}
+            {% if status == 'Пауза' %}
+              mdi:pause
+            {% elif status == 'Выполняется' %}
+              mdi:play
+            {% else %}
+              mdi:stop
+            {% endif %}
+
+  binary_sensor:
+    - platform: template
+      sensors:
+        ultron_parity_check_in_progress:
+          friendly_name: "Parity-Check in progress"
+          device_class: running
+          value_template: >
+            {% set progress = states('sensor.ultron_parity_progress') | float %}
+            {{ 0 < progress < 100 }}
+          availability_template: "{{ states('sensor.ultron_parity_progress') | float(0) > 0 }}"
+
+        ultron_parity_check_paused:
+          friendly_name: "Parity-Check paused"
+          value_template: >
+            {% set in_progress = is_state('binary_sensor.ultron_parity_check_in_progress', 'on') %}
+            {% set in_progress_size = states('sensor.ultron_parity_size_raw') | int == 0 %}
+            {{ in_progress_size and in_progress }}
+          availability_template: >
+            {% set valid_size = states('sensor.ultron_parity_size_raw') | int(-1) >= 0 %}
+            {% set valid_in_progress = states('binary_sensor.ultron_parity_check_in_progress') in ['on', 'off'] %}
+            {{ valid_size and valid_in_progress }}

@@ -1,0 +1,14 @@
+  wardrobe_light:
+    duration: '00:01:00'
+    
+  entrance_light:
+    duration: '00:02:00'
+    
+  pihole:
+    duration: '00:05:00'
+    
+  ultron_disks:
+    duration: '00:05:00'
+    
+  tapo_c110_recording:
+    duration: '00:00:10'

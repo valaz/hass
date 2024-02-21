@@ -1,0 +1,3 @@
+
+    ultron_spinup_disk1: 'ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 -T "uptime > /mnt/disk1/share/hass-disk1-check.txt"'
+    ultron_spinup_disk2: 'ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 -T "uptime > /mnt/disk2/share/hass-disk2-check.txt"'
