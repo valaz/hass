@@ -1,41 +1,39 @@
 - alias: "Start Telegram for Transmission"
   trigger:
-  - platform: state
-    entity_id: switch.docker_transmission
-  - platform: state
-    entity_id: switch.docker_transmission_telegram
+    - platform: state
+      entity_id: switch.c_ultron_docker_transmission
+    - platform: state
+      entity_id: switch.c_ultron_docker_transmission_telegram
   condition:
     - condition: and
       conditions:
         - condition: state
-          entity_id: switch.docker_transmission
+          entity_id: switch.c_ultron_docker_transmission
           state: "on"
         - condition: state
-          entity_id: switch.docker_transmission_telegram
+          entity_id: switch.c_ultron_docker_transmission_telegram
           state: "off"
   action:
-  - service: switch.turn_on
-    target:
-        entity_id: switch.docker_transmission_telegram
-        
-        
+    - service: switch.turn_on
+      target:
+        entity_id: switch.c_ultron_docker_transmission_telegram
+
 - alias: "[Ultron] Start Disks timer when disks are hot"
   trigger:
-  - platform: state
-    entity_id: binary_sensor.ultron_disks_are_hot
-    to: "on"
+    - platform: state
+      entity_id: binary_sensor.ultron_disks_are_hot
+      to: "on"
   action:
-  - service: timer.start
-    target:
+    - service: timer.start
+      target:
         entity_id: timer.ultron_disks
-        
-        
+
 - alias: "[Ultron] Spinup Disks when they are still hot"
   trigger:
-  - platform: event
-    event_type: timer.finished
-    event_data:
-      entity_id: timer.ultron_disks
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.ultron_disks
   condition:
     condition: state
     entity_id: binary_sensor.ultron_disks_are_hot
@@ -49,6 +47,3 @@
     - service: timer.start
       target:
         entity_id: timer.ultron_disks
-
-        
-        

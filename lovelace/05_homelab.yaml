@@ -38,7 +38,7 @@ cards:
               show_header_toggle: false
             filter:
               include:
-                - name: "Docker *"
+                - entity_id: "switch.c_ultron_docker_*"
             sort:
               method: name
             show_empty: true

@@ -1,4 +1,171 @@
-# ultron_docker_vm:
+ultron_docker_vm:
+  switch:
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/transmission
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_transmission
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/transmission-telegram
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_transmission-telegram
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/telegraf
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_telegraf
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/nextcloud
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_nextcloud
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/plex
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_plex
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/radarr
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_radarr
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/sonarr
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_sonarr
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/syncthing
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_syncthing
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/glances
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_glances
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/grafana
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_grafana
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/homepage
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_homepage
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/GluetunVPN
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_GluetunVPN
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/honeygain
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_honeygain
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/traffmonetizer
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_traffmonetizer
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
 #   command_line:
 #     - switch:
 #         unique_id: ultron_server
@@ -26,110 +193,3 @@
 #         value_template: '{{ value == "running" }}'
 #         icon: mdi:fedora
 
-#     - switch:
-#         unique_id: docker_transmission
-#         name: "Docker Transmission"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start transmission"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop transmission"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect transmission | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_transmission_telegram
-#         name: "Docker Transmission-Telegram"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start transmission-telegram"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop transmission-telegram"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect transmission-telegram | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_homebridge
-#         name: "Docker Homebridge"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start homebridge"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop homebridge"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect homebridge | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_telegraf
-#         name: "Docker telegraf"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start telegraf"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop telegraf"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect telegraf | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_android_debug_bridge
-#         name: "Docker AndroidDebugBridge"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start AndroidDebugBridge"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop AndroidDebugBridge"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect AndroidDebugBridge | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_nextcloud
-#         name: "Docker Nextcloud"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start nextcloud"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop nextcloud"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect nextcloud | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_plex
-#         name: "Docker Plex"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start plex"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop plex"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect plex | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_radarr
-#         name: "Docker Radarr"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start radarr"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop radarr"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect radarr | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_syncthing
-#         name: "Docker Syncthing"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start syncthing"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop syncthing"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect syncthing | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_glances
-#         name: "Docker Glances"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start glances"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop glances"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect glances | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_honeygain
-#         name: "Docker Honeygain"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start honeygain"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop honeygain"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect honeygain | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
-
-#     - switch:
-#         unique_id: docker_traffmonetizer
-#         name: "Docker Traffmonetizer"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker start traffmonetizer"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker stop traffmonetizer"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker inspect traffmonetizer | jq '.[0].State.Status' -r "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:docker
