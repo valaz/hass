@@ -42,19 +42,6 @@ telegram:
               {{"\U0001F50C"}} Свичей недоступно - {{ states('sensor.unavailable_now_switch') }} 
               {{"\U0001F321"}} Сенсоров недоступно - {{ states('sensor.unavailable_now_sensor') }} 
               {{"\U0001F51F"}} Бинарных сенсоров недоступно - {{ states('sensor.unavailable_now_binary_sensor') }}
-    climate_report:
-      alias: Отправка отчета о состоянии климата
-      sequence:
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F333"}} Климат в квартире
-              {{"\U0001F567"}} Отчет за {{ states('sensor.time_date') }}
-              {{"\U0001F4FA"}} Гостиная - {{ states('sensor.air_purifier_temperature') }} °C, {{ states('sensor.air_purifier_humidity') }} %
-              {{"\U0001F468"}} Спальня - {{ states('sensor.0x00158d0006ed6b85_temperature') }} °C, {{ states('sensor.0x00158d0006ed6b85_humidity') }} %
-              {{"\U0001F476"}} Детская - {{ states('sensor.0x00158d000586695c_temperature') }} °C, {{ states('sensor.0x00158d000586695c_humidity') }} %
-              {{"\U0001F487"}} Лоджия - {{ states('sensor.0x00158d0005800735_temperature') }} °C, {{ states('sensor.0x00158d0005800735_humidity') }} %
-              {{"\U0001F52A"}} Кухня - {{ states('sensor.e72e01500c8f_temperature') }} °C, {{ states('sensor.e72e01500c8f_humidity') }} %
 
     homelab_report:
       alias: Отправка отчета о состоянии homelab
@@ -70,16 +57,6 @@ telegram:
               {{"\U0001F5B4"}} Ultron Disk 2 - {{ states('sensor.ultron_disk_2_temperature') }} °C
               {{"\U0001F4BD"}} Ultron Cache Disk 1 - {{ states('sensor.ultron_cache_temperature') }} °C
               {{"\U0001F4BD"}} Ultron Cache Disk 2- {{ states('sensor.ultron_cache_2_temperature') }} °C
-
-    people_report:
-      alias: Отправка отчета о состоянии people
-      sequence:
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F3E0"}} Люди
-              {{"\U0001F468"}} {% if is_state('binary_sensor.azat_at_home', 'on') %}Азат дома{% else %}Азат НЕ дома{% endif %}
-              {{"\U0001F469"}} {% if is_state('binary_sensor.elia_at_home', 'on') %}Элия дома{% else %}Элия НЕ дома{% endif %}
 
   # https://apps.timwhitlock.info/emoji/tables/unicode
   automation:
@@ -98,7 +75,6 @@ telegram:
             data:
               keyboard:
                 - "/report, /homelab"
-                - "/climate, /people"
 
     - id: Отчет при запуске системы
       alias: start_message
@@ -130,19 +106,6 @@ telegram:
           entity_id:
             - script.system_report
 
-    - id: Запрос на климат
-      alias: send_climate_report
-      initial_state: true
-      trigger:
-        - platform: event
-          event_type: telegram_command
-          event_data:
-            command: "/climate"
-      action:
-        - service: script.turn_on
-          entity_id:
-            - script.climate_report
-
     - id: Запрос на homelab
       alias: send_homelab_report
       initial_state: true
@@ -155,149 +118,6 @@ telegram:
         - service: script.turn_on
           entity_id:
             - script.homelab_report
-
-    - id: Запрос на people
-      alias: send_people_report
-      initial_state: true
-      trigger:
-        - platform: event
-          event_type: telegram_command
-          event_data:
-            command: "/people"
-      action:
-        - service: script.turn_on
-          entity_id:
-            - script.people_report
-
-    - id: Увлажнитель выключился
-      alias: humidifier_turned_off
-      initial_state: true
-      trigger:
-        - platform: state
-          entity_id: switch.philips_humidifier
-          from: "on"
-          to: "off"
-          for: "00:00:20"
-        - platform: state
-          entity_id: switch.philips_humidifier
-          from: "on"
-          to: "off"
-          for: "00:05:00"
-        - platform: state
-          entity_id: switch.philips_humidifier
-          from: "on"
-          to: "off"
-          for: "01:00:00"
-      condition:
-        - condition: and
-          conditions:
-            - condition: state
-              entity_id: switch.0x04cf8cdf3c764d02
-              state: "on"
-      action:
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F4A7"}} В увлажнителе закончилась вода или он был выключен вручную.
-
-    - id: Увлажнитель включился
-      alias: humidifier_turned_on
-      initial_state: true
-      trigger:
-        - platform: state
-          entity_id: switch.philips_humidifier
-          from: "off"
-          to: "on"
-      condition:
-        - condition: and
-          conditions:
-            - condition: state
-              entity_id: switch.0x04cf8cdf3c764d02
-              state: "on"
-      action:
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F4A7"}} Увлажнитель снова работает.
-
-    - id: В увлажнителе заканчивается вода
-      alias: humidifier_low_water
-      initial_state: true
-      trigger:
-        - platform: numeric_state
-          entity_id: sensor.air_humidifier_water_level
-          below: 2
-        - platform: numeric_state
-          entity_id: sensor.air_humidifier_water_level
-          below: 6
-        - platform: numeric_state
-          entity_id: sensor.air_humidifier_water_level
-          below: 11
-        - platform: numeric_state
-          entity_id: sensor.air_humidifier_water_level
-          below: 21
-        - platform: numeric_state
-          entity_id: sensor.air_humidifier_water_level
-          below: 31
-      condition:
-        - condition: and
-          conditions:
-            - condition: state
-              entity_id: humidifier.air_humidifier
-              state: "on"
-      action:
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F4A7"}} В детском увлажнителе заканчивается вода - {{ states('sensor.air_humidifier_water_level') }} %
-
-    - id: Детский увлажнитель снова работает
-      alias: humidifier_enough_water
-      initial_state: true
-      trigger:
-        - platform: numeric_state
-          entity_id: sensor.air_humidifier_water_level
-          above: 80
-      condition:
-        - condition: and
-          conditions:
-            - condition: state
-              entity_id: humidifier.air_humidifier
-              state: "on"
-      action:
-        - delay: 00:00:10
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F4A7"}} Детский увлажнитель снова работает - {{ states('sensor.air_humidifier_water_level') }} %
-
-    - id: Лампа недоступна
-      alias: light_is_offline
-      initial_state: false
-      trigger:
-        - platform: state
-          entity_id: light.0x00158d00052b3ad9
-          to: "unavailable"
-          for:
-            minutes: 2
-      action:
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F4A1"}} Лампа в гардеробе была выключена вручную.
-
-    - id: Лампа доступна
-      alias: light_is_online
-      initial_state: false
-      trigger:
-        - platform: state
-          entity_id: light.0x00158d00052b3ad9
-          from: "unavailable"
-      action:
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F4A1"}} Лампа в гардеробе снова доступна.
 
     - id: CPU горячий
       alias: cpu_temp_is_hot
@@ -405,60 +225,6 @@ telegram:
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Disk1 уменьшилась - {{ states('sensor.ultron_disk_1_temperature') }} °C.
 
-    - id: Roborock зараяжен
-      alias: roborock_is_charged
-      initial_state: true
-      condition:
-        - condition: and
-          conditions:
-            - condition: state
-              entity_id: vacuum.roborock_s5
-              state: "docked"
-      trigger:
-        - platform: state
-          entity_id: binary_sensor.roborock_is_charged
-          from: "off"
-          to: "on"
-      action:
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F9F9"}}{{"\U0001F50B"}} Пылесос зарядился.
-
-    - id: Roborock завершил уборку
-      alias: roborock_finished_cleaning
-      initial_state: true
-      trigger:
-        - platform: state
-          entity_id: vacuum.roborock_s5
-          from: "returning"
-          to: "docked"
-      action:
-        - service: script.turn_on
-          entity_id:
-            - script.roborock_map_to_telegram
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F9F9"}} Пылесос завершил уборку.
-              {{"\U0001F3E0"}} Площадь уборки - {{ states('sensor.roborock_s5_last_clean_area') }} m2.
-              {{"\U000023F1"}} Время уборки - {{ states('sensor.roborock_last_clean_duration') }} мин.
-              {{"\U0001F50B"}} Уровень заряда - {{ states('sensor.roborock_s5_battery') }} %.
-
-    - id: Roborock начал уборку
-      alias: roborock_started_cleaning
-      initial_state: true
-      trigger:
-        - platform: state
-          entity_id: vacuum.roborock_s5
-          from: "docked"
-          to: "cleaning"
-      action:
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F9F9"}} Пылесос начал уборку.
-
     - id: Torrent is completed
       alias: torrent_is_completed
       trigger:
@@ -494,55 +260,3 @@ telegram:
             title: "Торрент удален!"
             message: |
               {{"\U00002796"}} {{trigger.event.data.name}}
-
-    - id: Door is Opened
-      alias: door_is_opened
-      trigger:
-        platform: state
-        entity_id: binary_sensor.0x00158d0006e4e280_contact
-        to: "on"
-      condition:
-        - condition: and
-          conditions:
-            - condition: state
-              entity_id: binary_sensor.people_at_home
-              state: "off"
-      action:
-        - delay: 00:00:03
-        - service: script.turn_on
-          entity_id:
-            - script.photo_tapo_c110_telegram
-
-    - id: Door Movements
-      alias: door_movements
-      trigger:
-        platform: state
-        entity_id: binary_sensor.0x00158d0006bed661_occupancy
-        to: "on"
-      condition:
-        - condition: and
-          conditions:
-            - condition: state
-              entity_id: binary_sensor.people_at_home
-              state: "off"
-      action:
-        - service: notify.tg_valaz
-          data:
-            message: '{{"\U0001F6AA"}} Кто-то пришел.'
-        - service: script.turn_on
-          entity_id:
-            - script.video_tapo_c110_telegram
-
-    - id: Видеокарат не работает
-      alias: ultron_gpu_is_idle
-      initial_state: false
-      trigger:
-        - platform: state
-          entity_id: binary_sensor.ultron_gpu_on_load
-          to: "off"
-          for: "00:05:00"
-      action:
-        - service: notify.tg_valaz
-          data:
-            message: |
-              {{"\U0001F914"}} Ultron не использует видеокарту уже 5 минут.
