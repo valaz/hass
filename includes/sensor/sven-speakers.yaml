@@ -1,4 +1,0 @@
-#   - platform: template
-#     sensors:
-#       volume:
-#          friendly_name: "Громкость"

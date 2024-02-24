@@ -69,10 +69,6 @@
       column: "value"
       unit_of_measurement: MB
 
-#   - platform: uptime
-#     name: online
-# unit_of_measurement: minutes
-
 - platform: template
   sensors:
     online_custom:

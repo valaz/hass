@@ -1,4 +1,8 @@
 ultron_disks:
+  timer:
+    ultron_disks:
+      duration: "00:05:00"
+
   alert:
     ultron_disks_are_hot:
       name: "Перегрев дисков"
@@ -49,6 +53,10 @@ ultron_disks:
           friendly_name: "Parity-Check in progress"
           value_template: >-
             {{ states('sensor.ultron_parity_progress') | float > 0 }}
+
+  shell_command:
+    ultron_spinup_disk1: 'ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 -T "uptime > /mnt/disk1/share/hass-disk1-check.txt"'
+    ultron_spinup_disk2: 'ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 -T "uptime > /mnt/disk2/share/hass-disk2-check.txt"'
 
   automation:
     - alias: "Start Telegram for Transmission"

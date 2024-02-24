@@ -43,26 +43,26 @@ tts:
   - platform: google_translate
 
 # Вынос во внешние файлы
-timer: !include includes/timer.yaml
-group: !include includes/groups.yaml
-scene: !include includes/scenes.yaml
+# timer: !include includes/timer.yaml
+# group: !include includes/groups.yaml
+# scene: !include includes/scenes.yaml
 recorder: !include includes/recorder.yaml
-vacuum: !include includes/vacuum.yaml
-fan: !include includes/fan.yaml
+# vacuum: !include includes/vacuum.yaml
+# fan: !include includes/fan.yaml
 # remote: !include includes/remote.yaml
-media_player: !include includes/media_player.yaml
+# media_player: !include includes/media_player.yaml
 # camera: !include includes/camera.yaml
 
 # Вынос во внешние папки
 sensor: !include_dir_merge_list includes/sensor
-automation: !include_dir_merge_list includes/automation
-switch: !include_dir_merge_list includes/switches
-script: !include_dir_merge_named includes/scripts
-shell_command: !include_dir_merge_named includes/shell_commands
-binary_sensor: !include_dir_merge_list includes/bin_sensor
+# automation: !include_dir_merge_list includes/automation
+# switch: !include_dir_merge_list includes/switches
+# script: !include_dir_merge_named includes/scripts
+# shell_command: !include_dir_merge_named includes/shell_commands
+# binary_sensor: !include_dir_merge_list includes/bin_sensor
 # input_select: !include_dir_merge_named includes/input_select
 # input_number: !include_dir_merge_named includes/input_numbers
-alert: !include_dir_merge_named includes/alerts
+# alert: !include_dir_merge_named includes/alerts
 # rest_command: !include_dir_merge_named includes/rest_commands
 
 # mqtt:
