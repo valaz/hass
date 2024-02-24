@@ -8,10 +8,6 @@ swipe_nav:
 
 views:
   - !include lovelace/01_system.yaml
-#   - !include lovelace/02_rooms.yaml
-#   - !include lovelace/03_climate.yaml
-#   - !include lovelace/04_devices.yaml
   - !include lovelace/05_homelab.yaml
-#   - !include lovelace/06_zigbee.yaml
   - !include lovelace/31_automation.yaml
   
