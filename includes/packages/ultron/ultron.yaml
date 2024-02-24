@@ -6,6 +6,14 @@ ultron:
           friendly_name: "Ultron IP"
           value_template: !secret ultron_ip
 
+  script:
+    ultron_disks_spinup:
+      icon: mdi:harddisk
+      alias: "Spinup Array Disks"
+      sequence:
+        - service: shell_command.ultron_spinup_disk1
+        - service: shell_command.ultron_spinup_disk2
+
   automation:
     - alias: "[Ultron] Shutdown server on schedule"
       initial_state: false

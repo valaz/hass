@@ -1,7 +1,0 @@
-ultron_disks_spinup:
-    icon: mdi:harddisk
-    alias: "Spinup Array Disks"
-    sequence:
-      - service: shell_command.ultron_spinup_disk1
-      - service: shell_command.ultron_spinup_disk2
-        
