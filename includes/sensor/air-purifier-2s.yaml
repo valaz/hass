@@ -1,7 +1,0 @@
-  # Xiaomi Air Purifier 2S
-#   - platform: template
-#     sensors:
-#       xiaomi_airpurifier_preset_mode:
-#         friendly_name: "Preset mode"
-#         value_template: "{{ state_attr('fan.xiaomi_air_purifier_2s', 'preset_mode') }}"
-#         icon_template: "mdi:select-place"
