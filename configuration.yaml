@@ -60,8 +60,8 @@ switch: !include_dir_merge_list includes/switches
 script: !include_dir_merge_named includes/scripts
 shell_command: !include_dir_merge_named includes/shell_commands
 binary_sensor: !include_dir_merge_list includes/bin_sensor
-input_select: !include_dir_merge_named includes/input_select
-input_number: !include_dir_merge_named includes/input_numbers
+# input_select: !include_dir_merge_named includes/input_select
+# input_number: !include_dir_merge_named includes/input_numbers
 alert: !include_dir_merge_named includes/alerts
 # rest_command: !include_dir_merge_named includes/rest_commands
 
