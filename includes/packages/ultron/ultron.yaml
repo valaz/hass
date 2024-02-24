@@ -6,16 +6,6 @@ ultron:
           friendly_name: "Ultron IP"
           value_template: !secret ultron_ip
 
-  #     shell_command:
-  #         ultron_docker_restart_adb: 'ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 docker restart AndroidDebugBridge'
-
-  #     script:
-  #         ultron_docker_restart_adb:
-  #             alias: 'Ultron: перегезагрузка ADB'
-  #             sequence:
-  #                 service:
-  #                     shell_command.ultron_docker_restart_adb
-
   automation:
     - alias: "[Ultron] Shutdown server on schedule"
       initial_state: false
@@ -30,17 +20,3 @@ ultron:
         - service: switch.turn_off
           target:
             entity_id: switch.ultron_server
-#       - id: 'adb_restart_if_mibox_is_online'
-#         alias: 'ADB рестарт при появлении в сети Mi Box'
-#         trigger:
-#           - platform: state
-#             entity_id: binary_sensor.mi_box_ping
-#             to: 'on'
-#         condition:
-#             condition: state
-#             entity_id: media_player.mi_box
-#             state:
-#               - unknown
-#               - unavailable
-#         action:
-#           - service: script.ultron_docker_restart_adb
