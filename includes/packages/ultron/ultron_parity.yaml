@@ -1,4 +1,4 @@
-ultron_parity:
+# ultron_parity:
   # command_line:
   #   - sensor:
   #       unique_id: ultron_parity_common_size_raw
