@@ -23,6 +23,7 @@ secrets.yaml
 known_devices.yaml
 
 ultron.key
+*.key
 
 www/cam_captures/**
 zigbee2mqtt/log/**
