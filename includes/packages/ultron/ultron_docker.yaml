@@ -1,4 +1,44 @@
-ultron_docker_vm:
+ultron_docker:
+  automation:
+    - alias: "[Ultron Docker] Autostart Radarr"
+      trigger:
+        - platform: time_pattern
+          minutes: /15
+      condition:
+        - condition: state
+          entity_id: switch.c_ultron_docker_radarr
+          state: "off"
+      action:
+        - service: switch.turn_on
+          target:
+            entity_id: switch.c_ultron_docker_radarr
+
+    - alias: "[Ultron Docker] Autostart Overseer"
+      trigger:
+        - platform: time_pattern
+          minutes: /15
+      condition:
+        - condition: state
+          entity_id: switch.c_ultron_docker_overseerr
+          state: "off"
+      action:
+        - service: switch.turn_on
+          target:
+            entity_id: switch.c_ultron_docker_overseerr
+
+    - alias: "[Ultron Docker] Autostart Honeygain"
+      trigger:
+        - platform: time_pattern
+          minutes: /15
+      condition:
+        - condition: state
+          entity_id: switch.c_ultron_docker_honeygain
+          state: "off"
+      action:
+        - service: switch.turn_on
+          target:
+            entity_id: switch.c_ultron_docker_honeygain
+
   switch:
     - platform: rest
       resource: http://192.168.1.11:8126/container/transmission
@@ -53,6 +93,18 @@ ultron_docker_vm:
       username: !secret ha-dockermon.username
       password: !secret ha-dockermon.password
       name: c_ultron_docker_plex
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/overseerr
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_overseerr
       body_on: '{"state": "start"}'
       body_off: '{"state": "stop"}'
       is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
@@ -166,30 +218,4 @@ ultron_docker_vm:
       icon: mdi:docker
       headers:
         Content-Type: application/json
-#   command_line:
-#     - switch:
-#         unique_id: ultron_server
-#         name: "Ultron Server"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 start"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 shutdown -h now"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 echo 0 "
-#         icon: mdi:server
-
-#     - switch:
-#         unique_id: vm_htpc
-#         name: "VM HTPC"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh start HTPC"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh shutdown HTPC"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh list --all | grep HTPC | awk '{print $3$4}' "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:microsoft-windows
-
-#     - switch:
-#         unique_id: vm_fedora
-#         name: "VM Fedora"
-#         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh start Fedora"
-#         command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh shutdown Fedora"
-#         command_state: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 virsh list --all | grep Fedora | awk '{print $3$4}' "
-#         value_template: '{{ value == "running" }}'
-#         icon: mdi:fedora
 

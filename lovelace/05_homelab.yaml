@@ -20,7 +20,7 @@ cards:
               show_header_toggle: false
             filter:
               include:
-                - name: "VM *"
+                - entity_id: "switch.c_ultron_vm_*"
             sort:
               method: name
             show_empty: true

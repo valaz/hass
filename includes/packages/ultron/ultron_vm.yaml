@@ -1,0 +1,62 @@
+ultron_vm:
+  sensor:
+    - platform: influxdb
+      host: !secret influxdb_host
+      username: !secret influxdb_username
+      password: !secret influxdb_password
+      queries:
+        - name: "VM HTPC State"
+          unique_id: c_ultron_vm_htpc_state
+          value_template: "{{ value }}"
+          group_function: last
+          where: '"vm" = ''HTPC'' AND "host" = ''ultron'''
+          measurement: '"virsh"'
+          field: state
+          database: homelab_telegraf
+
+        - name: "VM Fedora State"
+          unique_id: c_ultron_vm_fedora_state
+          value_template: "{{ value }}"
+          group_function: last
+          where: '"vm" = ''Fedora'' AND "host" = ''ultron'''
+          measurement: '"virsh"'
+          field: state
+          database: homelab_telegraf
+
+  shell_command:
+    start_ultron_vm_htpc: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh start 'HTPC'"
+    shutdown_ultron_vm_htpc: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh shutdown 'HTPC'"
+    start_ultron_vm_fedora: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh start 'Fedora'"
+    shutdown_ultron_vm_fedora: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh shutdown 'Fedora'"
+
+  switch:
+    - platform: template
+      switches:
+        c_ultron_vm_htpc:
+          friendly_name: "VM HTPC"
+          icon_template: mdi:microsoft-windows
+          value_template: "{{ is_state('sensor.vm_htpc_state', 'running') }}"
+          turn_on:
+            - service: shell_command.start_ultron_vm_htpc
+          turn_off:
+            - service: shell_command.shutdown_ultron_vm_htpc
+
+    - platform: template
+      switches:
+        c_ultron_vm_fedora:
+          friendly_name: "VM Fedora"
+          icon_template: mdi:fedora
+          value_template: "{{ is_state('sensor.vm_fedora_state', 'running') }}"
+          turn_on:
+            - service: shell_command.start_ultron_vm_fedora
+          turn_off:
+            - service: shell_command.shutdown_ultron_vm_fedora
+
+  command_line:
+    - switch:
+        unique_id: ultron_server
+        name: "Ultron Server"
+        command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} start"
+        command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} shutdown -h now"
+        command_state: "echo 0"
+        icon: mdi:server
