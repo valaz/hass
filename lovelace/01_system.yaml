@@ -47,49 +47,6 @@ cards:
             name: HACS
           - update.home_assistant_core_update
           - update.home_assistant_supervisor_update
-      #=============================
-      #=== Component Counts
-      #=============================
-      - type: glance
-        title: "Количество компонентов"
-        columns: 4
-        entities:
-          - entity: sensor.count_automations
-            name: Automations
-            icon: mdi:autorenew
-          - entity: sensor.count_scripts
-            name: Scripts
-            icon: mdi:script-text-outline
-          - entity: sensor.count_zones
-            name: Zones
-            icon: mdi:map-marker-radius
-          - entity: sensor.count_device_trackers
-            name: Device Trackers
-            icon: mdi:map-marker
-          - entity: sensor.count_switches
-            name: Switches
-            icon: mdi:light-switch
-          - entity: sensor.count_sensors
-            name: Sensors
-            icon: mdi:resistor
-          - entity: sensor.count_binary_sensors
-            name: Binary Sensors
-            icon: mdi:unfold-more-horizontal
-          - entity: sensor.count_input_booleans
-            name: Input Booleans
-            icon: mdi:toggle-switch
-          - entity: sensor.count_input_numbers
-            name: Input Numbers
-            icon: mdi:numeric
-          - entity: sensor.count_input_texts
-            name: Input Texts
-            icon: mdi:alphabetical
-          - entity: sensor.count_input_selects
-            name: Input Select
-            icon: mdi:view-list
-          - entity: sensor.count_input_datetimes
-            name: Input Date Times
-            icon: mdi:calendar-clock
 
   - type: vertical-stack
     cards:
@@ -140,3 +97,46 @@ cards:
         entities:
           - entity: sensor.maria_db_size
             name: Maria DB
+      #=============================
+      #=== Component Counts
+      #=============================
+      - type: glance
+        title: "Количество компонентов"
+        columns: 4
+        entities:
+          - entity: sensor.count_automations
+            name: Automations
+            icon: mdi:autorenew
+          - entity: sensor.count_scripts
+            name: Scripts
+            icon: mdi:script-text-outline
+          - entity: sensor.count_zones
+            name: Zones
+            icon: mdi:map-marker-radius
+          - entity: sensor.count_device_trackers
+            name: Device Trackers
+            icon: mdi:map-marker
+          - entity: sensor.count_switches
+            name: Switches
+            icon: mdi:light-switch
+          - entity: sensor.count_sensors
+            name: Sensors
+            icon: mdi:resistor
+          - entity: sensor.count_binary_sensors
+            name: Binary Sensors
+            icon: mdi:unfold-more-horizontal
+          - entity: sensor.count_input_booleans
+            name: Input Booleans
+            icon: mdi:toggle-switch
+          - entity: sensor.count_input_numbers
+            name: Input Numbers
+            icon: mdi:numeric
+          - entity: sensor.count_input_texts
+            name: Input Texts
+            icon: mdi:alphabetical
+          - entity: sensor.count_input_selects
+            name: Input Select
+            icon: mdi:view-list
+          - entity: sensor.count_input_datetimes
+            name: Input Date Times
+            icon: mdi:calendar-clock
