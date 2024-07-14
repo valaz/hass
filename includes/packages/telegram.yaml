@@ -52,9 +52,9 @@ telegram:
               {{"\U00002699"}} Homelab
               {{"\U0001F567"}} Отчет за {{ states('sensor.time_date') }}
               {{"\U00002600"}} Ultron CPU - {{ states('sensor.ultron_cpu_temperature') }} °C
-              {{"\U0001F5B4"}} Ultron Parity Disk - {{ states('sensor.ultron_parity_disk_temperature') }} °C
-              {{"\U0001F5B4"}} Ultron Disk 1 - {{ states('sensor.ultron_disk_1_temperature') }} °C
-              {{"\U0001F5B4"}} Ultron Disk 2 - {{ states('sensor.ultron_disk_2_temperature') }} °C
+              {{"\U0001F5B4"}} Ultron Parity Disk - {{ states('sensor.ultron_parity_disk_temperature') }} °C ({{ states('sensor.ultron_parity_disk_state') }})
+              {{"\U0001F5B4"}} Ultron Disk 1 - {{ states('sensor.ultron_disk_1_temperature') }} °C ({{ states('sensor.ultron_disk_1_state') }})
+              {{"\U0001F5B4"}} Ultron Disk 2 - {{ states('sensor.ultron_disk_2_temperature') }} °C ({{ states('sensor.ultron_disk_1_state') }})
               {{"\U0001F4BD"}} Ultron Cache Disk 1 - {{ states('sensor.ultron_cache_temperature') }} °C
               {{"\U0001F4BD"}} Ultron Cache Disk 2- {{ states('sensor.ultron_cache_2_temperature') }} °C
 

@@ -19,7 +19,16 @@ sensor.transmission_started_torrents:
 
 sensor.ultron_cpu_usage:
   icon: "mdi:speedometer"
+sensor.ultron_igpu_usage:
+  icon: "mdi:speedometer"
 sensor.ultron_ram_usage:
   icon: "mdi:memory"
 sensor.ultron_swap_usage:
   icon: "mdi:memory"
+
+sensor.ultron_parity_disk_state:
+  icon: "mdi:circle"
+sensor.ultron_disk_1_state:
+  icon: "mdi:circle"
+sensor.ultron_disk_2_state:
+  icon: "mdi:circle"

@@ -178,10 +178,6 @@ cards:
         cards:
           - type: entities
             entities:
-              - script.ultron_disks_spinup
-
-          - type: entities
-            entities:
               - type: custom:multiple-entity-row
                 entity: sensor.ultron_parity_status
                 name: "Parity-Check"
@@ -197,6 +193,36 @@ cards:
                     name: "Завершено"
                     format: precision2
                     hide_if: 100
+          - type: entities
+            entities:
+              - script.ultron_disks_spinup
+              - entity: sensor.ultron_parity_disk_state
+                type: custom:multiple-entity-row
+                name: Parity Disk
+                secondary_info: last-changed
+                entities:
+                  - entity: sensor.ultron_parity_disk_standby_time
+                    name: standby
+                  - entity: sensor.ultron_parity_disk_standby_ratio
+                    name: standby (%)
+              - entity: sensor.ultron_disk_1_state
+                type: custom:multiple-entity-row
+                name: Disk 1
+                secondary_info: last-changed
+                entities:
+                  - entity: sensor.ultron_disk_1_standby_time
+                    name: standby
+                  - entity: sensor.ultron_disk_1_standby_ratio
+                    name: standby (%)
+              - entity: sensor.ultron_disk_2_state
+                type: custom:multiple-entity-row
+                name: Disk 2
+                secondary_info: last-changed
+                entities:
+                  - entity: sensor.ultron_disk_2_standby_time
+                    name: standby
+                  - entity: sensor.ultron_disk_2_standby_ratio
+                    name: standby (%)
 
           - type: horizontal-stack
             cards:

@@ -7,9 +7,9 @@ ultron_metrics:
       queries:
         - name: Ultron CPU Temperature
           unit_of_measurement: °C
-          value_template: "{{ value | round(1) }}"
+          value_template: "{{ value }}"
           group_function: last
-          where: '"sensor" = ''coretemp_packageid0_input'' AND "host" = ''ultron'''
+          where: '"sensor" = ''coretemp_package_id_0'' AND "host" = ''ultron'''
           measurement: '"temp"'
           field: temp
           database: homelab_telegraf
@@ -55,8 +55,16 @@ ultron_metrics:
           value_template: "{{ value | round(2) }}"
           group_function: last
           where: '"serial_no" = ''9MGWL7YJ'' AND "host" = ''ultron'''
-          measurement: '"smart_device"'
+          measurement: '"smart_exec"'
           field: temp_c
+          database: homelab_telegraf
+
+        - name: Ultron Parity Disk State
+          value_template: "{{ value }}"
+          group_function: last
+          where: '"serial_no" = ''9MGWL7YJ'' AND "host" = ''ultron'''
+          measurement: '"smart_exec"'
+          field: state
           database: homelab_telegraf
 
         - name: Ultron Disk 1 Temperature
@@ -64,8 +72,16 @@ ultron_metrics:
           value_template: "{{ value | round(2) }}"
           group_function: last
           where: '"serial_no" = ''9KGVHS3L'' AND "host" = ''ultron'''
-          measurement: '"smart_device"'
+          measurement: '"smart_exec"'
           field: temp_c
+          database: homelab_telegraf
+
+        - name: Ultron Disk 1 State
+          value_template: "{{ value }}"
+          group_function: last
+          where: '"serial_no" = ''9KGVHS3L'' AND "host" = ''ultron'''
+          measurement: '"smart_exec"'
+          field: state
           database: homelab_telegraf
 
         - name: Ultron Disk 2 Temperature
@@ -73,8 +89,16 @@ ultron_metrics:
           value_template: "{{ value | round(2) }}"
           group_function: last
           where: '"serial_no" = ''Y5KU0P3C'' AND "host" = ''ultron'''
-          measurement: '"smart_device"'
+          measurement: '"smart_exec"'
           field: temp_c
+          database: homelab_telegraf
+
+        - name: Ultron Disk 2 State
+          value_template: "{{ value }}"
+          group_function: last
+          where: '"serial_no" = ''Y5KU0P3C'' AND "host" = ''ultron'''
+          measurement: '"smart_exec"'
+          field: state
           database: homelab_telegraf
 
         - name: Ultron Cache Temperature
@@ -82,7 +106,7 @@ ultron_metrics:
           value_template: "{{ value | round(2) }}"
           group_function: last
           where: '"serial_no" = ''S5Y1NZ0R522193Z'' AND "host" = ''ultron'''
-          measurement: '"smart_device"'
+          measurement: '"smart_exec"'
           field: temp_c
           database: homelab_telegraf
 
@@ -91,7 +115,7 @@ ultron_metrics:
           value_template: "{{ value | round(2) }}"
           group_function: last
           where: '"serial_no" = ''S6PXNM0T202704D'' AND "host" = ''ultron'''
-          measurement: '"smart_device"'
+          measurement: '"smart_exec"'
           field: temp_c
           database: homelab_telegraf
 
