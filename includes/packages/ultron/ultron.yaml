@@ -19,7 +19,7 @@ ultron:
       initial_state: false
       trigger:
         - platform: time
-          at: "23:55:00"
+          at: "23:00:00"
       action:
         - service: notify.tg_valaz
           data:

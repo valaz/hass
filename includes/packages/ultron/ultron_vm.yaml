@@ -57,6 +57,6 @@ ultron_vm:
         unique_id: ultron_server
         name: "Ultron Server"
         command_on: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} start"
-        command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} shutdown -h now"
+        command_off: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 shutdown -h now"
         command_state: "echo 0"
         icon: mdi:server
