@@ -219,3 +219,38 @@ ultron_docker:
       headers:
         Content-Type: application/json
 
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/Nginx-Proxy-Manager-Official
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_Nginx-Proxy-Manager-Official
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/tailscale-proxy
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_tailscale-proxy
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/tailscale-network
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_tailscale-network
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
