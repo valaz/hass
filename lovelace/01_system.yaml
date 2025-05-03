@@ -23,7 +23,8 @@ cards:
                 hide_unavailable: true
               - entity: sensor.time
                 name: Время
-      - type: "custom:sun-card"
+
+      - type: "custom:horizon-card"
         language: ru
 
       - type: entities
