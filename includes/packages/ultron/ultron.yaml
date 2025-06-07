@@ -16,10 +16,14 @@ ultron:
 
   automation:
     - alias: "[Ultron] Shutdown server on schedule"
-      initial_state: false
+      initial_state: true
       trigger:
         - platform: time
-          at: "23:00:00"
+          at: "23:23:00"
+      condition:
+        - condition: template
+          value_template: >
+            {{ now().year == 2025 and now().month == 5 and now().day >= 3 and now().day <= 10 }}
       action:
         - service: notify.tg_valaz
           data:

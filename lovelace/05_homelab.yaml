@@ -27,9 +27,9 @@ cards:
           - type: glance
             columns: 2
             entities:
-              - entity: sensor.ultron_glances_containers_cpu_used
+              - entity: sensor.192_168_1_11_containers_cpu_usage
                 name: "CPU"
-              - entity: sensor.ultron_glances_containers_ram_used
+              - entity: sensor.192_168_1_11_containers_memory_used
                 name: "RAM"
 
           - type: custom:auto-entities
@@ -87,10 +87,10 @@ cards:
                 points_per_hour: 12
                 update_interval: 30
                 entities:
-                  - entity: sensor.ultron_glances_cpu_used
+                  - entity: sensor.192_168_1_11_cpu_usage
               - type: custom:mini-graph-card
                 entities:
-                  - entity: sensor.ultron_glances_package_id_0_temperature
+                  - entity: sensor.192_168_1_11_package_id_0_temperature
                 name: "Температура процессора"
                 animate: true
                 hour24: true
@@ -137,7 +137,7 @@ cards:
                 points_per_hour: 12
                 update_interval: 30
                 entities:
-                  - entity: sensor.ultron_glances_ram_used_percent
+                  - entity: sensor.192_168_1_11_memory_usage
           - type: horizontal-stack
             cards:
               - type: custom:mini-graph-card
@@ -313,7 +313,7 @@ cards:
               - type: custom:mini-graph-card
                 name: Disk 1
                 entities:
-                  - sensor.ultron_glances_mnt_disk1_used_percent
+                  - sensor.192_168_1_11_rootfs_disk1_disk_usage
                 hour24: true
                 show:
                   graph: false
@@ -324,7 +324,7 @@ cards:
               - type: custom:mini-graph-card
                 name: Disk 2
                 entities:
-                  - sensor.ultron_glances_mnt_disk2_used_percent
+                  - sensor.192_168_1_11_rootfs_disk2_disk_usage
                 hour24: true
                 show:
                   graph: false

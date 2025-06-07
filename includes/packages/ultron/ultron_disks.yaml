@@ -56,6 +56,25 @@ ultron_disks:
             {{ states('sensor.ultron_parity_progress') | float > 0 }}
 
   sensor:
+    - platform: template
+      sensors:
+        c_192_168_1_11_rootfs_array_disk_used:
+          unit_of_measurement: "GiB"
+          device_class: data_size
+          value_template: >
+            {{ (states('sensor.192_168_1_11_rootfs_disk1_disk_used') | float) + (states('sensor.192_168_1_11_rootfs_disk2_disk_used') | float) }}
+        c_192_168_1_11_rootfs_array_disk_free:
+          unit_of_measurement: "GiB"
+          device_class: data_size
+          value_template: >
+            {{ (states('sensor.192_168_1_11_rootfs_disk1_disk_free') | float) + (states('sensor.192_168_1_11_rootfs_disk2_disk_free') | float) }}
+        c_192_168_1_11_rootfs_array_disk_usage:
+          unit_of_measurement: "%"
+          value_template: >
+            {% set array_total_size = (states('sensor.c_192_168_1_11_rootfs_array_disk_used') | float) + (states('sensor.c_192_168_1_11_rootfs_array_disk_free') | float) %}
+            {% set array_used_size = states('sensor.c_192_168_1_11_rootfs_array_disk_used') | float %}
+            {{ (array_used_size / array_total_size * 100.0 | float) | round(2) }}
+
     - platform: history_stats
       name: Ultron Parity Disk Standby Time
       entity_id: sensor.ultron_parity_disk_state

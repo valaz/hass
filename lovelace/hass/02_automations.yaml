@@ -1,0 +1,128 @@
+title: Automations
+path: automations
+type: sections
+icon: mdi:script
+cards: []
+max_columns: 3
+sections:
+  - type: grid ###   Hass    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Hass
+        icon: mdi:home-assistant
+      - type: custom:tabbed-card
+        tabs:
+          - attributes:
+              label: Main
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:auto-entities
+                  show_empty: false
+                  card:
+                    type: entities
+                    show_header_toggle: false
+                  filter:
+                    include:
+                      - domain: automation
+                        name: "*HASS]*"
+                        options:
+                          secondary_info: last-triggered
+                        sort:
+                          method: name
+                  exclude:
+                    - state: "off"
+  - type: grid ###   Ultron    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Unraid
+        icon: mdi:nas
+      - type: custom:tabbed-card
+        tabs:
+          - attributes:
+              label: Main
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:auto-entities
+                  show_empty: false
+                  card:
+                    type: entities
+                    show_header_toggle: false
+                  filter:
+                    include:
+                      - domain: automation
+                        name: "*Ultron]*"
+                        options:
+                          secondary_info: last-triggered
+                        sort:
+                          method: name
+                  exclude:
+                    - state: "off"
+          - attributes:
+              label: Docker
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:auto-entities
+                  show_empty: false
+                  card:
+                    type: entities
+                    show_header_toggle: false
+                  filter:
+                    include:
+                      - domain: automation
+                        name: "*Ultron Docker]*"
+                        options:
+                          secondary_info: last-triggered
+                        sort:
+                          method: name
+                  exclude:
+                    - state: "off"
+
+  - type: grid ###   Other    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Other Automations
+        icon: mdi:server
+      - type: custom:auto-entities
+        show_empty: false
+        card:
+          type: entities
+          show_header_toggle: false
+        filter:
+          include:
+            - domain: automation
+              not:
+                name: "*Lights*"
+              options:
+                secondary_info: last-triggered
+              sort:
+                method: name
+          exclude:
+            - name: "*Ultron Docker]*"
+            - name: "*Ultron]*"
+            - name: "*HASS]*"
+
+      - type: heading
+        heading: Disabled Automations
+        heading_style: subtitle
+        icon: mdi:cloud-off-outline
+
+      - type: custom:auto-entities
+        show_empty: false
+        card:
+          type: entities
+          show_header_toggle: false
+        filter:
+          include:
+            - domain: automation
+              options:
+                secondary_info: last-triggered
+              sort:
+                method: name
+          exclude:
+            - state: "on"

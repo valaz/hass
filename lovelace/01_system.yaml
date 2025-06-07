@@ -63,7 +63,7 @@ cards:
           - type: gauge
             name: Загрузка CPU
             unit: "%"
-            entity: sensor.processor_use_percent
+            entity: sensor.system_monitor_processor_use
             severity:
               green: 0
               yellow: 60
@@ -71,7 +71,7 @@ cards:
           - type: gauge
             name: Загрузка ОЗУ
             unit: "%"
-            entity: sensor.memory_use_percent
+            entity: sensor.system_monitor_memory_usage
             severity:
               green: 0
               yellow: 60
@@ -81,7 +81,7 @@ cards:
           - type: gauge
             name: Диск заполненн
             unit: "%"
-            entity: sensor.disk_use_percent
+            entity: sensor.system_monitor_disk_usage
             severity:
               green: 0
               yellow: 60
@@ -89,7 +89,7 @@ cards:
           - type: gauge
             name: Свободное место
             unit: "Гб"
-            entity: sensor.disk_free
+            entity: sensor.system_monitor_disk_free
             severity:
               red: 2
               yellow: 6

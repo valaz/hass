@@ -1,0 +1,6 @@
+title: Homelab
+views:
+  - !include lovelace/homelab/01_network.yaml
+  - !include lovelace/homelab/02_ultron.yaml
+  - !include lovelace/homelab/03_ultron_docker.yaml
+  - !include lovelace/homelab/04_ultron_media.yaml

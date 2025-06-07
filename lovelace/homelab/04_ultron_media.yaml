@@ -1,0 +1,305 @@
+title: Ultron Media
+path: ultron_media
+type: sections
+icon: mdi:play-network
+cards: []
+max_columns: 3
+sections:
+  - type: grid ###   Plex    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Plex
+        icon: mdi:plex
+        tap_action:
+          action: url
+          url_path: https://plex.valiev.moscow
+        badges:
+          - type: entity
+            show_icon: true
+            icon: mdi:play
+            color: orange
+            entity: sensor.ultron
+            tap_action:
+              action: more-info
+
+      - type: tile
+        entity: update.plex_media_server_ultron
+        name: Plex Update
+      - type: tile
+        entity: button.ultron_scan_clients
+        name: Scan Clients
+
+      - type: heading
+        heading: Movies
+        heading_style: subtitle
+        icon: mdi:movie
+        badges:
+          - type: entity
+            entity: sensor.ultron_library_filmy_ultron
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Series
+        heading_style: subtitle
+        icon: mdi:television
+        badges:
+          - type: entity
+            entity: sensor.ultron_library_serialy_ultron
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Kids Movies
+        heading_style: subtitle
+        icon: mdi:movie
+        badges:
+          - type: entity
+            entity: sensor.ultron_library_multfilmy_ultron
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Kids Series
+        heading_style: subtitle
+        icon: mdi:television
+        badges:
+          - type: entity
+            entity: sensor.ultron_library_multserialy_ultron
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Audiobooks
+        heading_style: subtitle
+        icon: mdi:book-music
+        badges:
+          - type: entity
+            entity: sensor.ultron_library_audioknigi_unraid
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: custom:auto-entities
+        show_empty: false
+        card:
+          type: entities
+          show_header_toggle: false
+        filter:
+          include:
+            - domain: media_player
+              not:
+                entity_id: "plex_*"
+              options:
+                secondary_info: last-triggered
+              sort:
+                method: name
+          exclude:
+            - state: "unavailable"
+
+      - graph: line
+        type: sensor
+        entity: sensor.ultron_igpu_usage
+        detail: 2
+        name: iGPU
+        icon: mdi:expansion-card-variant
+        grid_options:
+          columns: 12
+          rows: 2
+
+  - type: grid ###   Radarr    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Radarr
+        icon: mdi:filmstrip
+        tap_action:
+          action: url
+          url_path: https://radarr.valiev.moscow
+        badges:
+          - type: entity
+            show_icon: true
+            icon: mdi:movie
+            color: orange
+            entity: sensor.radarr_movies
+            tap_action:
+              action: more-info
+
+      - type: tile
+        entity: sensor.radarr_queue
+        name: Queue
+      - type: tile
+        entity: calendar.radarr
+        name: Claendar
+
+      - graph: line
+        type: sensor
+        entity: sensor.radarr_disk_space_movies
+        detail: 2
+        name: Disk Space
+        grid_options:
+          columns: 12
+          rows: 3
+
+  - type: grid ###   Sonarr    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Sonarr
+        icon: mdi:playlist-check
+        tap_action:
+          action: url
+          url_path: https://sonarr.valiev.moscow
+        badges:
+          - type: entity
+            show_icon: true
+            icon: mdi:television
+            color: orange
+            entity: sensor.sonarr_shows
+            tap_action:
+              action: more-info
+
+      - type: tile
+        entity: sensor.sonarr_upcoming
+        name: Upcoming
+      - type: tile
+        entity: sensor.sonarr_wanted
+        name: Wanted
+      - type: tile
+        entity: sensor.sonarr_queue
+        name: Queue
+      - type: tile
+        entity: sensor.sonarr_commands
+        name: Commands
+
+      - graph: line
+        type: sensor
+        entity: sensor.sonarr_disk_space
+        detail: 2
+        name: Disk Space
+        grid_options:
+          columns: 12
+          rows: 3
+
+  - type: grid ###   Transmission    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Transmission
+        icon: mdi:download-box
+        tap_action:
+          action: url
+          url_path: http://192.168.1.11:9091/transmission/web/
+        badges:
+          - type: entity
+            show_icon: false
+            # icon: mdi:play
+            color: orange
+            entity: sensor.transmission_total_torrents
+            tap_action:
+              action: more-info
+      - type: custom:transmission-card
+        # sensor_entity_id: sensor.transmission
+        hide_type: false
+        default_type: "active"
+        # display_mode: full
+
+  - type: grid ###   Syncthing    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Syncthing
+        icon: mdi:sync-circle
+        tap_action:
+          action: url
+          url_path: http://192.168.1.11:8384/
+
+      - type: heading
+        heading: Default
+        heading_style: subtitle
+        icon: mdi:folder
+        badges:
+          - type: entity
+            entity: sensor.dhcflq4_default_default_folder
+            state_content: global_files
+            color: blue
+            show_icon: true
+            icon: mdi:file
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.dhcflq4_default_default_folder
+            color: blue
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Games
+        heading_style: subtitle
+        icon: mdi:gamepad
+        badges:
+          - type: entity
+            entity: sensor.dhcflq4_iqeus_eeskc_games
+            state_content: global_files
+            color: blue
+            show_icon: true
+            icon: mdi:file
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.dhcflq4_iqeus_eeskc_games
+            color: blue
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Media-Downloads-Movies
+        heading_style: subtitle
+        icon: mdi:movie
+        badges:
+          - type: entity
+            entity: sensor.dhcflq4_media_downloads_movies_media_downloads_movies
+            state_content: global_files
+            color: blue
+            show_icon: true
+            icon: mdi:file
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.dhcflq4_media_downloads_movies_media_downloads_movies
+            color: blue
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Media-Travel
+        heading_style: subtitle
+        icon: mdi:road
+        badges:
+          - type: entity
+            entity: sensor.dhcflq4_media_travel_media_travel
+            state_content: global_files
+            color: blue
+            show_icon: true
+            icon: mdi:file
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.dhcflq4_media_travel_media_travel
+            color: blue
+            show_icon: false
+            tap_action:
+              action: more-info

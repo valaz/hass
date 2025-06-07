@@ -1,0 +1,49 @@
+title: Ultron Docker
+path: ultron_docker
+type: sections
+icon: mdi:docker
+cards: []
+max_columns: 3
+sections:
+  - type: grid ###   Ultron Docker    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Ultron Docker
+        icon: mdi:docker
+        badges:
+          - type: entity
+            show_icon: true
+            icon: mdi:cube
+            color: orange
+            entity: sensor.192_168_1_11_containers_active
+            tap_action:
+              action: more-info
+
+      - type: tile
+        entity: sensor.192_168_1_11_containers_cpu_usage
+        features_position: bottom
+        vertical: false
+        name: CPU
+        show_entity_picture: false
+        icon: mdi:cpu-64-bit
+        color: orange
+      - type: tile
+        entity: sensor.192_168_1_11_containers_memory_used
+        features_position: bottom
+        vertical: false
+        name: Memory
+        show_entity_picture: false
+        icon: mdi:chip
+        color: light-blue
+
+      - type: custom:auto-entities
+        card:
+          type: entities
+          show_header_toggle: false
+        filter:
+          include:
+            - entity_id: "switch.c_ultron_docker_*"
+        sort:
+          method: name
+        show_empty: true

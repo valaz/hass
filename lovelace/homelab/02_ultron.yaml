@@ -1,0 +1,535 @@
+title: Ultron
+path: ultron
+type: sections
+icon: mdi:nas
+cards: []
+max_columns: 3
+sections:
+  - type: grid ###   Ultron Hardware    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Ultron Hardware
+        icon: mdi:cpu-64-bit
+        tap_action:
+          action: url
+          url_path: http://192.168.1.11:61208/
+        badges:
+          - type: entity
+            show_icon: true
+            icon: mdi:cpu-64-bit
+            color: orange
+            entity: sensor.192_168_1_11_package_id_0_temperature
+            tap_action:
+              action: more-info
+          - type: entity
+            show_icon: false
+            icon: mdi:cpu-64-bit
+            color: orange
+            entity: sensor.192_168_1_11_cpu_usage
+            tap_action:
+              action: more-info
+          - type: entity
+            show_icon: true
+            icon: mdi:chip
+            color: blue
+            entity: sensor.192_168_1_11_memory_usage
+            tap_action:
+              action: more-info
+          - type: entity
+            show_icon: true
+            icon: mdi:harddisk
+            color: green
+            entity: sensor.192_168_1_11_disk_usage
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Uptime
+        heading_style: subtitle
+        icon: mdi:clock
+        badges:
+          - type: entity
+            entity: sensor.192_168_1_11_uptime
+            color: blue
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Load
+        heading_style: subtitle
+        icon: mdi:server-network
+        badges:
+          - type: entity
+            entity: sensor.192_168_1_11_cpu_load
+            show_icon: false
+            tap_action:
+              action: more-info
+
+  - type: grid ###   Ultron VM    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Ultron VM
+        icon: mdi:server
+      - type: tile
+        entity: switch.c_ultron_vm_fedora
+        features_position: bottom
+        vertical: false
+        name: Fedora
+        show_entity_picture: false
+        icon: mdi:fedora
+        color: orange
+      - type: tile
+        entity: switch.c_ultron_vm_htpc
+        features_position: bottom
+        vertical: false
+        name: HTPC
+        show_entity_picture: false
+        icon: mdi:microsoft-windows
+        color: light-blue
+
+  - type: grid ###   Ultron Docker    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Ultron Docker
+        icon: mdi:docker
+        badges:
+          - type: entity
+            show_icon: true
+            icon: mdi:cube
+            color: orange
+            entity: sensor.192_168_1_11_containers_active
+            tap_action:
+              action: more-info
+      - type: tile
+        entity: sensor.192_168_1_11_containers_cpu_usage
+        features_position: bottom
+        vertical: false
+        name: CPU
+        show_entity_picture: false
+        icon: mdi:cpu-64-bit
+        color: orange
+      - type: tile
+        entity: sensor.192_168_1_11_containers_memory_used
+        features_position: bottom
+        vertical: false
+        name: Memory
+        show_entity_picture: false
+        icon: mdi:chip
+        color: light-blue
+
+  - type: grid ###   Ultron Array    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Ultron Array
+        icon: mdi:server
+
+      - type: heading
+        heading: Parity Check
+        heading_style: subtitle
+        icon: mdi:check-all
+        badges:
+          - type: entity
+            entity: sensor.ultron_parity_status
+            color: blue
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Parity Progress
+        heading_style: subtitle
+        # icon: mdi:check-all
+        badges:
+          - type: entity
+            entity: sensor.ultron_parity_speed
+            color: orange
+            icon: mdi:speedometer
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.ultron_parity_progress
+            color: orange
+            icon: mdi:list-status
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.ultron_parity_finish_timestamp
+            color: orange
+            show_icon: false
+            tap_action:
+              action: more-info
+        visibility:
+          - condition: numeric_state
+            entity: sensor.ultron_parity_progress
+            below: 100
+
+      # - type: heading
+      #   icon: mdi:harddisk
+      #   heading: Disks
+      #   heading_style: title
+
+      - type: heading
+        icon: mdi:harddisk
+        heading: /rootfs/cache
+        heading_style: subtitle
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: orange
+            icon: mdi:thermometer
+            entity: sensor.ultron_cache_temperature
+            tap_action:
+              action: more-info
+          - type: entity
+            show_state: true
+            icon: mdi:thermometer
+            show_icon: true
+            color: orange
+            entity: sensor.ultron_cache_2_temperature
+            tap_action:
+              action: more-info
+          - type: entity
+            show_state: true
+            show_icon: true
+            entity: sensor.192_168_1_11_rootfs_cache_disk_usage
+            tap_action:
+              action: more-info
+      - type: tile
+        entity: sensor.192_168_1_11_rootfs_cache_disk_used
+        features_position: bottom
+        vertical: false
+        name: Used
+        show_entity_picture: false
+        color: red
+      - type: tile
+        entity: sensor.192_168_1_11_rootfs_cache_disk_free
+        features_position: bottom
+        vertical: false
+        name: Free
+        show_entity_picture: false
+        color: light-blue
+
+      - type: heading
+        icon: mdi:harddisk
+        heading: /rootfs/array
+        heading_style: subtitle
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: orange
+            icon: mdi:thermometer
+            entity: sensor.ultron_parity_disk_temperature
+            tap_action:
+              action: more-info
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: orange
+            icon: mdi:thermometer
+            entity: sensor.ultron_disk_1_temperature
+            tap_action:
+              action: more-info
+          - type: entity
+            show_state: true
+            show_icon: true
+            icon: mdi:thermometer
+            color: orange
+            entity: sensor.ultron_disk_2_temperature
+            tap_action:
+              action: more-info
+          - type: entity
+            show_state: true
+            show_icon: true
+            entity: sensor.c_192_168_1_11_rootfs_array_disk_usage
+            tap_action:
+              action: more-info
+      - type: tile
+        entity: sensor.c_192_168_1_11_rootfs_array_disk_used
+        features_position: bottom
+        vertical: false
+        name: Used
+        show_entity_picture: false
+        color: red
+      - type: tile
+        entity: sensor.c_192_168_1_11_rootfs_array_disk_free
+        features_position: bottom
+        vertical: false
+        name: Free
+        show_entity_picture: false
+        color: light-blue
+
+      - type: heading
+        icon: mdi:harddisk
+        heading: /rootfs/disk1
+        heading_style: subtitle
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: true
+            color: orange
+            icon: mdi:thermometer
+            entity: sensor.ultron_disk_1_temperature
+            tap_action:
+              action: more-info
+          - type: entity
+            show_state: true
+            show_icon: true
+            entity: sensor.192_168_1_11_rootfs_disk1_disk_usage
+            tap_action:
+              action: more-info
+      - type: tile
+        entity: sensor.192_168_1_11_rootfs_disk1_disk_used
+        features_position: bottom
+        vertical: false
+        name: Used
+        show_entity_picture: false
+        color: red
+      - type: tile
+        entity: sensor.192_168_1_11_rootfs_disk1_disk_free
+        features_position: bottom
+        vertical: false
+        name: Free
+        show_entity_picture: false
+        color: light-blue
+
+      - type: heading
+        icon: mdi:harddisk
+        heading: /rootfs/disk2
+        heading_style: subtitle
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: true
+            icon: mdi:thermometer
+            color: orange
+            entity: sensor.ultron_disk_2_temperature
+            tap_action:
+              action: more-info
+          - type: entity
+            show_state: true
+            show_icon: true
+            entity: sensor.192_168_1_11_rootfs_disk2_disk_usage
+            tap_action:
+              action: more-info
+      - type: tile
+        entity: sensor.192_168_1_11_rootfs_disk2_disk_used
+        features_position: bottom
+        vertical: false
+        name: Used
+        show_entity_picture: false
+        color: red
+      - type: tile
+        entity: sensor.192_168_1_11_rootfs_disk2_disk_free
+        features_position: bottom
+        vertical: false
+        name: Free
+        show_entity_picture: false
+        color: light-blue
+
+  - type: grid ###   Ultron Network    ###
+    cards:
+      - type: heading
+        icon: mdi:access-point-network
+        heading: Ultron Network
+        heading_style: title
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: false
+            entity: sensor.ultron_ip
+
+      - type: heading
+        icon: mdi:home-assistant
+        heading: eth0
+        heading_style: subtitle
+      - type: tile
+        entity: sensor.192_168_1_11_eth0_rx
+        features_position: bottom
+        vertical: false
+        name: Download
+        icon: mdi:download
+        color: teal
+        show_entity_picture: false
+      - type: tile
+        entity: sensor.192_168_1_11_eth0_tx
+        features_position: bottom
+        vertical: false
+        name: Upload
+        icon: mdi:upload
+        color: purple
+        show_entity_picture: false
+
+      - type: heading
+        icon: mdi:home-assistant
+        heading: bond0
+        heading_style: subtitle
+      - type: tile
+        entity: sensor.192_168_1_11_bond0_rx
+        features_position: bottom
+        vertical: false
+        name: Download
+        icon: mdi:download
+        color: teal
+        show_entity_picture: false
+      - type: tile
+        entity: sensor.192_168_1_11_bond0_tx
+        features_position: bottom
+        vertical: false
+        name: Upload
+        icon: mdi:upload
+        color: purple
+        show_entity_picture: false
+
+      - type: heading
+        icon: mdi:home-assistant
+        heading: br0
+        heading_style: subtitle
+      - type: tile
+        entity: sensor.192_168_1_11_br0_rx
+        features_position: bottom
+        vertical: false
+        name: Download
+        icon: mdi:download
+        color: teal
+        show_entity_picture: false
+      - type: tile
+        entity: sensor.192_168_1_11_br0_tx
+        features_position: bottom
+        vertical: false
+        name: Upload
+        icon: mdi:upload
+        color: purple
+        show_entity_picture: false
+
+      - type: heading
+        icon: mdi:home-assistant
+        heading: docker0
+        heading_style: subtitle
+      - type: tile
+        entity: sensor.192_168_1_11_docker0_rx
+        features_position: bottom
+        vertical: false
+        name: Download
+        icon: mdi:download
+        color: teal
+        show_entity_picture: false
+      - type: tile
+        entity: sensor.192_168_1_11_docker0_tx
+        features_position: bottom
+        vertical: false
+        name: Upload
+        icon: mdi:upload
+        color: purple
+        show_entity_picture: false
+
+      - type: heading
+        icon: mdi:home-assistant
+        heading: tailscale1
+        heading_style: subtitle
+      - type: tile
+        entity: sensor.192_168_1_11_tailscale1_rx
+        features_position: bottom
+        vertical: false
+        name: Download
+        icon: mdi:download
+        color: teal
+        show_entity_picture: false
+      - type: tile
+        entity: sensor.192_168_1_11_tailscale1_tx
+        features_position: bottom
+        vertical: false
+        name: Upload
+        icon: mdi:upload
+        color: purple
+        show_entity_picture: false
+
+  - type: grid ###   Ultron Power    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Ultron Power
+        icon: mdi:server
+      - graph: line
+        type: sensor
+        entity: sensor.server_rozetka_current_power
+        detail: 2
+        name: Power Consumption
+        grid_options:
+          columns: 12
+          rows: 3
+      - type: heading
+        heading: Consumed Today
+        heading_style: subtitle
+        # icon: mdi:clock
+        badges:
+          - type: entity
+            entity: sensor.server_rozetka_today_energy
+            color: blue
+            tap_action:
+              action: more-info
+      - type: heading
+        heading: Consumed This Month
+        heading_style: subtitle
+        # icon: mdi:clock
+        badges:
+          - type: entity
+            entity: sensor.server_rozetka_month_energy
+            color: blue
+            tap_action:
+              action: more-info
+      - type: heading
+        heading: UPS
+        heading_style: subtitle
+        icon: mdi:battery
+        badges:
+          - type: entity
+            entity: sensor.ultron_model
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+      - type: heading
+        heading: UPS Battery
+        heading_style: subtitle
+        # icon: mdi:clock
+        badges:
+          - type: entity
+            entity: sensor.ultron_ups_battery
+            color: green
+            tap_action:
+              action: more-info
+      - type: heading
+        heading: UPS Load
+        heading_style: subtitle
+        # icon: mdi:clock
+        badges:
+          - type: entity
+            entity: sensor.ultron_ups_load
+            color: green
+            tap_action:
+              action: more-info
+      - type: heading
+        heading: UPS Runtime Left
+        heading_style: subtitle
+        # icon: mdi:clock
+        badges:
+          - type: entity
+            entity: sensor.ultron_ups_time_left
+            color: yellow
+            tap_action:
+              action: more-info
+      - type: heading
+        heading: UPS Transfers Count
+        heading_style: subtitle
+        # icon: mdi:clock
+        badges:
+          - type: entity
+            entity: sensor.ultron_ups_transfer_count
+            color: green
+            tap_action:
+              action: more-info

@@ -13,6 +13,19 @@ default_config:
 
 lovelace:
   mode: yaml
+  dashboards:
+    hass-ui:
+      mode: yaml
+      title: Hass
+      icon: mdi:home-assistant
+      show_in_sidebar: true
+      filename: ui-hass.yaml
+    homelab-ui:
+      mode: yaml
+      title: Homelab
+      icon: mdi:server
+      show_in_sidebar: true
+      filename: ui-homelab.yaml
   resources:
     - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
       type: module
@@ -35,6 +48,8 @@ lovelace:
     - url: /hacsfiles/transmission-card/transmission-card.js
       type: module
     - url: /hacsfiles/lovelace-horizon-card/lovelace-horizon-card.js
+      type: module
+    - url: /hacsfiles/tabbed-card/tabbed-card.js
       type: module
 
 logger:

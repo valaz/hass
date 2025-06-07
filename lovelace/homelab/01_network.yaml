@@ -1,0 +1,186 @@
+title: Network
+path: network
+type: sections
+icon: mdi:network
+cards: []
+max_columns: 3
+sections:
+  - type: grid ###   Asus Router    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Asus Router
+        icon: mdi:router-wireless
+        tap_action:
+          action: url
+          url_path: http://192.168.1.1
+        badges:
+          - type: entity
+            show_icon: true
+            icon: mdi:cpu-64-bit
+            color: orange
+            entity: sensor.192_168_1_1_cpu_temperature
+            tap_action:
+              action: more-info
+          - type: entity
+            show_icon: false
+            icon: mdi:cpu-64-bit
+            color: orange
+            entity: sensor.192_168_1_1_cpu_usage
+            tap_action:
+              action: more-info
+          - type: entity
+            show_icon: true
+            icon: mdi:chip
+            color: blue
+            entity: sensor.192_168_1_1_memory_usage
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Last Boot
+        heading_style: subtitle
+        icon: mdi:restart-alert
+        badges:
+          - type: entity
+            entity: sensor.192_168_1_1_last_boot
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Connected Devices
+        heading_style: subtitle
+        icon: mdi:devices
+        badges:
+          - type: entity
+            entity: sensor.192_168_1_1_devices_connected
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Speedtest
+        heading_style: subtitle
+        icon: mdi:speedometer
+        badges:
+          - type: entity
+            entity: sensor.speedtest_ping
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.speedtest_download
+            color: green
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.speedtest_upload
+            color: orange
+            tap_action:
+              action: more-info
+
+      - graph: line
+        type: sensor
+        entity: sensor.192_168_1_1_download_speed
+        detail: 2
+        name: Download
+        icon: mdi:download
+      - graph: line
+        type: sensor
+        entity: sensor.192_168_1_1_upload_speed
+        detail: 2
+        name: Upload
+        icon: mdi:upload
+
+  - type: grid ###   Transmission    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Transmission
+        icon: mdi:download-box
+        tap_action:
+          action: url
+          url_path: https://tr.valiev.moscow
+        badges:
+          - type: entity
+            show_icon: false
+            icon: mdi:list-status
+            color: orange
+            entity: sensor.transmission_status
+            tap_action:
+              action: more-info
+
+      - type: tile
+        entity: switch.transmission_switch
+        name: Switcher
+        color: green
+        vertical: false
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+        # layout_options:
+        #   grid_columns: 1
+        #   grid_rows: 2
+      - type: tile
+        entity: switch.transmission_turtle_mode
+        name: Slow Mode
+        color: green
+        vertical: false
+        tap_action:
+          action: toggle
+        hold_action:
+          action: more-info
+        # layout_options:
+        #   grid_columns: 1
+        #   grid_rows: 2
+
+      - graph: line
+        type: sensor
+        entity: sensor.transmission_down_speed
+        detail: 2
+        name: Download
+        icon: mdi:download
+      - graph: line
+        type: sensor
+        entity: sensor.transmission_up_speed
+        detail: 2
+        name: Upload
+        icon: mdi:upload
+
+      - type: glance
+        columns: 5
+        entities:
+          - entity: sensor.transmission_total_torrents
+            name: "Всего"
+            # icon: mdi:download-multiple
+          - entity: sensor.transmission_active_torrents
+            name: "Активно"
+            # icon: mdi:progress-download
+          - entity: sensor.transmission_completed_torrents
+            name: "Завершено"
+            # icon: mdi:download-circle
+          - entity: sensor.transmission_started_torrents
+            name: "Начато"
+            # icon: mdi:play
+          - entity: sensor.transmission_paused_torrents
+            name: "На паузе"
+            # icon: mdi:pause
+
+  - type: grid ###   Uptime Kuma    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Uptime Kuma
+        icon: mdi:account-badge
+        tap_action:
+          action: url
+          url_path: https://uptime.valiev.moscow
+      - type: custom:auto-entities
+        show_empty: false
+        card:
+          type: entities
+          show_header_toggle: false
+        filter:
+          include:
+            - entity_id: "binary_sensor.uptimekuma_*"
+              sort:
+                method: name

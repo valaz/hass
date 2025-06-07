@@ -1,0 +1,286 @@
+title: Hass
+path: hass
+type: sections
+icon: mdi:home-assistant
+cards: []
+max_columns: 3
+sections:
+  - type: grid ###   Software    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Software
+        icon: mdi:home-assistant
+
+      - type: heading
+        heading: Uptime
+        heading_style: subtitle
+        icon: mdi:clock
+        badges:
+          - type: entity
+            entity: sensor.online
+            color: blue
+
+      - type: tile
+        entity: script.homeassistant_restart
+        name: Restart HA
+        tap_action:
+          action: toggle
+        layout_options:
+          grid_columns: 4
+          grid_rows: 1
+
+      - type: tile
+        entity: update.home_assistant_core_update
+        name: Core Update
+        features:
+          - type: "update-actions"
+            backup: "ask"
+      - type: tile
+        entity: update.home_assistant_supervisor_update
+        name: Supervisor Update
+        features:
+          - type: "update-actions"
+            backup: "ask"
+
+      - type: history-graph
+        entities:
+          - entity: sensor.maria_db_size
+            name: Maria DB
+
+  - type: grid ###   Hardware    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Hardware
+        icon: mdi:cpu-64-bit
+        badges:
+          # - type: entity
+          #   show_icon: true
+          #   icon: mdi:cpu-64-bit
+          #   color: orange
+          #   entity: sensor.processor_temperature
+          #   tap_action:
+          #     action: more-info
+          - type: entity
+            show_icon: true
+            icon: mdi:cpu-64-bit
+            color: orange
+            entity: sensor.system_monitor_processor_use
+            tap_action:
+              action: more-info
+          - type: entity
+            show_icon: true
+            icon: mdi:chip
+            color: blue
+            entity: sensor.system_monitor_memory_usage
+            tap_action:
+              action: more-info
+          - type: entity
+            show_icon: true
+            icon: mdi:harddisk
+            color: green
+            entity: sensor.system_monitor_disk_usage
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Uptime
+        heading_style: subtitle
+        icon: mdi:clock
+        badges:
+          - type: entity
+            entity: sensor.system_monitor_last_boot
+            color: blue
+
+      - type: heading
+        heading: Load 1m/5m/15m
+        heading_style: subtitle
+        icon: mdi:server-network
+        badges:
+          - type: entity
+            entity: sensor.system_monitor_load_1_min
+            show_icon: false
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.system_monitor_load_5_min
+            show_icon: false
+            tap_action:
+              action: more-info
+          - type: entity
+            entity: sensor.system_monitor_load_15_min
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Local IP
+        icon: mdi:ip
+        heading_style: subtitle
+        badges:
+          - type: entity
+            show_icon: false
+            entity: sensor.local_ip
+
+      - type: heading
+        icon: mdi:harddisk
+        heading: Disks
+        heading_style: title
+      - type: heading
+        icon: mdi:harddisk
+        heading: /
+        heading_style: subtitle
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: true
+            entity: sensor.system_monitor_disk_usage
+            tap_action:
+              action: more-info
+      - type: tile
+        entity: sensor.system_monitor_disk_use
+        features_position: bottom
+        vertical: false
+        name: Used
+        show_entity_picture: false
+        color: red
+      - type: tile
+        entity: sensor.system_monitor_disk_free
+        features_position: bottom
+        vertical: false
+        name: Free
+        show_entity_picture: false
+        color: light-blue
+
+      - type: heading
+        icon: mdi:access-point-network
+        heading: Network
+        heading_style: title
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: false
+            entity: sensor.local_ip
+      - type: heading
+        icon: mdi:home-assistant
+        heading: hassio
+        heading_style: subtitle
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: false
+            entity: sensor.system_monitor_ipv4_address_hassio
+      - type: tile
+        entity: sensor.system_monitor_network_throughput_in_hassio
+        features_position: bottom
+        vertical: false
+        name: Download
+        icon: mdi:download
+        color: teal
+        show_entity_picture: false
+      - type: tile
+        entity: sensor.system_monitor_network_throughput_out_hassio
+        features_position: bottom
+        vertical: false
+        name: Upload
+        icon: mdi:upload
+        color: purple
+        show_entity_picture: false
+      - type: heading
+        icon: mdi:docker
+        heading: docker0
+        heading_style: subtitle
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: false
+            entity: sensor.system_monitor_ipv4_address_docker0
+      - type: tile
+        entity: sensor.system_monitor_network_throughput_in_docker0
+        features_position: bottom
+        vertical: false
+        name: Download
+        icon: mdi:download
+        color: teal
+        show_entity_picture: false
+      - type: tile
+        entity: sensor.system_monitor_network_throughput_out_docker0
+        features_position: bottom
+        vertical: false
+        name: Upload
+        icon: mdi:upload
+        color: purple
+        show_entity_picture: false
+      - type: heading
+        icon: mdi:ethernet
+        heading: enp1s0
+        heading_style: subtitle
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: false
+            entity: sensor.system_monitor_ipv4_address_enp1s0
+      - type: tile
+        entity: sensor.system_monitor_network_throughput_in_enp1s0
+        features_position: bottom
+        vertical: false
+        name: Download
+        icon: mdi:download
+        color: teal
+        show_entity_picture: false
+      - type: tile
+        entity: sensor.system_monitor_network_throughput_out_enp1s0
+        features_position: bottom
+        vertical: false
+        name: Upload
+        icon: mdi:upload
+        color: purple
+        show_entity_picture: false
+
+  - type: grid ###   Objects    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Objects
+        icon: mdi:state-machine
+
+      - type: glance
+        columns: 4
+        entities:
+          - entity: sensor.count_automations
+            name: Automations
+            icon: mdi:autorenew
+          - entity: sensor.count_scripts
+            name: Scripts
+            icon: mdi:script-text-outline
+          - entity: sensor.count_zones
+            name: Zones
+            icon: mdi:map-marker-radius
+          - entity: sensor.count_device_trackers
+            name: Device Trackers
+            icon: mdi:map-marker
+          - entity: sensor.count_switches
+            name: Switches
+            icon: mdi:light-switch
+          - entity: sensor.count_sensors
+            name: Sensors
+            icon: mdi:resistor
+          - entity: sensor.count_binary_sensors
+            name: Binary Sensors
+            icon: mdi:unfold-more-horizontal
+          - entity: sensor.count_input_booleans
+            name: Input Booleans
+            icon: mdi:toggle-switch
+          - entity: sensor.count_input_numbers
+            name: Input Numbers
+            icon: mdi:numeric
+          - entity: sensor.count_input_texts
+            name: Input Texts
+            icon: mdi:alphabetical
+          - entity: sensor.count_input_selects
+            name: Input Select
+            icon: mdi:view-list
+          - entity: sensor.count_input_datetimes
+            name: Input Date Times
+            icon: mdi:calendar-clock
