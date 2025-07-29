@@ -144,12 +144,60 @@ sections:
 
       - graph: line
         type: sensor
-        entity: sensor.radarr_disk_space_movies
+        entity: sensor.ultron_media_movies_total_size
         detail: 2
         name: Disk Space
         grid_options:
           columns: 12
           rows: 3
+
+      - type: heading
+        heading: Movies
+        heading_style: subtitle
+        icon: mdi:movie
+        badges:
+          - type: entity
+            entity: sensor.ultron_media_movies_size
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Downloads Movies
+        heading_style: subtitle
+        icon: mdi:movie
+        badges:
+          - type: entity
+            entity: sensor.ultron_media_downloads_movies_size
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Cartoons Movies
+        heading_style: subtitle
+        icon: mdi:movie
+        badges:
+          - type: entity
+            entity: sensor.ultron_media_cartoons_movies_size
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Travel Movies
+        heading_style: subtitle
+        icon: mdi:movie
+        badges:
+          - type: entity
+            entity: sensor.ultron_media_travel_movies_size
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
 
   - type: grid ###   Sonarr    ###
     cards:
@@ -184,12 +232,60 @@ sections:
 
       - graph: line
         type: sensor
-        entity: sensor.sonarr_disk_space
+        entity: sensor.ultron_media_series_total_size
         detail: 2
         name: Disk Space
         grid_options:
           columns: 12
           rows: 3
+
+      - type: heading
+        heading: Series
+        heading_style: subtitle
+        icon: mdi:television
+        badges:
+          - type: entity
+            entity: sensor.ultron_media_series_size
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Downloads Series
+        heading_style: subtitle
+        icon: mdi:television
+        badges:
+          - type: entity
+            entity: sensor.ultron_media_downloads_series_size
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Cartoons Series
+        heading_style: subtitle
+        icon: mdi:television
+        badges:
+          - type: entity
+            entity: sensor.ultron_media_cartoons_series_size
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
+
+      - type: heading
+        heading: Travel Series
+        heading_style: subtitle
+        icon: mdi:television
+        badges:
+          - type: entity
+            entity: sensor.ultron_media_travel_series_size
+            color: green
+            show_icon: false
+            tap_action:
+              action: more-info
 
   - type: grid ###   Transmission    ###
     cards:

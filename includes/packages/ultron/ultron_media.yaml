@@ -1,0 +1,90 @@
+ultron_media:
+  sensor:
+    - platform: influxdb
+      host: !secret influxdb_host
+      username: !secret influxdb_username
+      password: !secret influxdb_password
+      queries:
+        - name: Ultron Media Movies Size
+          unit_of_measurement: "GB"
+          value_template: "{{ (value | float / 1073741824) | round(2) }}"
+          group_function: last
+          where: '"directory" = ''/mnt/user/media/movies'''
+          measurement: '"filecount"'
+          field: size_bytes
+          database: homelab_telegraf
+        - name: Ultron Media Series Size
+          unit_of_measurement: "GB"
+          value_template: "{{ (value | float / 1073741824) | round(2) }}"
+          group_function: last
+          where: '"directory" = ''/mnt/user/media/series'''
+          measurement: '"filecount"'
+          field: size_bytes
+          database: homelab_telegraf
+        - name: Ultron Media Downloads Movies Size
+          unit_of_measurement: "GB"
+          value_template: "{{ (value | float / 1073741824) | round(2) }}"
+          group_function: last
+          where: '"directory" = ''/mnt/user/media/downloads/movies'''
+          measurement: '"filecount"'
+          field: size_bytes
+          database: homelab_telegraf
+        - name: Ultron Media Downloads Series Size
+          unit_of_measurement: "GB"
+          value_template: "{{ (value | float / 1073741824) | round(2) }}"
+          group_function: last
+          where: '"directory" = ''/mnt/user/media/downloads/series'''
+          measurement: '"filecount"'
+          field: size_bytes
+          database: homelab_telegraf
+        - name: Ultron Media Travel Movies Size
+          unit_of_measurement: "GB"
+          value_template: "{{ (value | float / 1073741824) | round(2) }}"
+          group_function: last
+          where: '"directory" = ''/mnt/user/media/travel/movies'''
+          measurement: '"filecount"'
+          field: size_bytes
+          database: homelab_telegraf
+        - name: Ultron Media Travel Series Size
+          unit_of_measurement: "GB"
+          value_template: "{{ (value | float / 1073741824) | round(2) }}"
+          group_function: last
+          where: '"directory" = ''/mnt/user/media/travel/series'''
+          measurement: '"filecount"'
+          field: size_bytes
+          database: homelab_telegraf
+        - name: Ultron Media Cartoons Movies Size
+          unit_of_measurement: "GB"
+          value_template: "{{ (value | float / 1073741824) | round(2) }}"
+          group_function: last
+          where: '"directory" = ''/mnt/user/media/cartoons/movies'''
+          measurement: '"filecount"'
+          field: size_bytes
+          database: homelab_telegraf
+        - name: Ultron Media Cartoons Series Size
+          unit_of_measurement: "GB"
+          value_template: "{{ (value | float / 1073741824) | round(2) }}"
+          group_function: last
+          where: '"directory" = ''/mnt/user/media/cartoons/series'''
+          measurement: '"filecount"'
+          field: size_bytes
+          database: homelab_telegraf
+
+  template:
+    - sensor:
+        - name: "Ultron Media Movies Total Size"
+          unit_of_measurement: "GB"
+          icon: mdi:folder-multiple
+          state: >
+            {% set movies = states('sensor.ultron_media_movies_size') | float(0) %}
+            {% set downloads = states('sensor.ultron_media_downloads_movies_size') | float(0) %}
+            {% set cartoons = states('sensor.ultron_media_cartoons_movies_size') | float(0) %}
+            {{ movies + downloads + cartoons }}
+        - name: "Ultron Media Series Total Size"
+          unit_of_measurement: "GB"
+          icon: mdi:folder-multiple
+          state: >
+            {% set series = states('sensor.ultron_media_series_size') | float(0) %}
+            {% set downloads = states('sensor.ultron_media_downloads_series_size') | float(0) %}
+            {% set cartoons = states('sensor.ultron_media_cartoons_series_size') | float(0) %}
+            {{ series + downloads + cartoons }}
