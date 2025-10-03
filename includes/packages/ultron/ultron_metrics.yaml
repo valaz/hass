@@ -101,6 +101,23 @@ ultron_metrics:
           field: state
           database: homelab_telegraf
 
+        - name: Ultron Disk 3 Temperature
+          unit_of_measurement: °C
+          value_template: "{{ value | round(2) }}"
+          group_function: last
+          where: '"serial_no" = ''T1G634XN'' AND "host" = ''ultron'''
+          measurement: '"smart_exec"'
+          field: temp_c
+          database: homelab_telegraf
+
+        - name: Ultron Disk 3 State
+          value_template: "{{ value }}"
+          group_function: last
+          where: '"serial_no" = ''T1G634XN'' AND "host" = ''ultron'''
+          measurement: '"smart_exec"'
+          field: state
+          database: homelab_telegraf
+
         - name: Ultron Cache Temperature
           unit_of_measurement: °C
           value_template: "{{ value | round(2) }}"

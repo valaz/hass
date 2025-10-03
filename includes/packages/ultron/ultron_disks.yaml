@@ -62,12 +62,12 @@ ultron_disks:
           unit_of_measurement: "GiB"
           device_class: data_size
           value_template: >
-            {{ (states('sensor.192_168_1_11_rootfs_disk1_disk_used') | float) + (states('sensor.192_168_1_11_rootfs_disk2_disk_used') | float) }}
+            {{ (states('sensor.192_168_1_11_rootfs_disk1_disk_used') | float) + (states('sensor.192_168_1_11_rootfs_disk2_disk_used') | float) + (states('sensor.192_168_1_11_rootfs_disk3_disk_used') | float) }}
         c_192_168_1_11_rootfs_array_disk_free:
           unit_of_measurement: "GiB"
           device_class: data_size
           value_template: >
-            {{ (states('sensor.192_168_1_11_rootfs_disk1_disk_free') | float) + (states('sensor.192_168_1_11_rootfs_disk2_disk_free') | float) }}
+            {{ (states('sensor.192_168_1_11_rootfs_disk1_disk_free') | float) + (states('sensor.192_168_1_11_rootfs_disk2_disk_free') | float) + (states('sensor.192_168_1_11_rootfs_disk3_disk_free') | float)  }}
         c_192_168_1_11_rootfs_array_disk_usage:
           unit_of_measurement: "%"
           value_template: >

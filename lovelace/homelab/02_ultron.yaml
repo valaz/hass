@@ -331,6 +331,40 @@ sections:
         show_entity_picture: false
         color: light-blue
 
+      - type: heading
+        icon: mdi:harddisk
+        heading: /rootfs/disk3
+        heading_style: subtitle
+        badges:
+          - type: entity
+            show_state: true
+            show_icon: true
+            icon: mdi:thermometer
+            color: orange
+            entity: sensor.ultron_disk_3_temperature
+            tap_action:
+              action: more-info
+          - type: entity
+            show_state: true
+            show_icon: true
+            entity: sensor.192_168_1_11_rootfs_disk3_disk_usage
+            tap_action:
+              action: more-info
+      - type: tile
+        entity: sensor.192_168_1_11_rootfs_disk3_disk_used
+        features_position: bottom
+        vertical: false
+        name: Used
+        show_entity_picture: false
+        color: red
+      - type: tile
+        entity: sensor.192_168_1_11_rootfs_disk3_disk_free
+        features_position: bottom
+        vertical: false
+        name: Free
+        show_entity_picture: false
+        color: light-blue
+
   - type: grid ###   Ultron Network    ###
     cards:
       - type: heading
