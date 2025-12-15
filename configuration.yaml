@@ -145,3 +145,16 @@ notify:
 pi_hole:
   host: 192.168.1.42
   api_key: !secret pi_hole_api_key
+
+proxmoxve:
+  - host: !secret proxmox.ip
+    verify_ssl: false
+    username: !secret proxmox.username
+    password: !secret proxmox.password
+    nodes:
+      - node: heimdall
+        vms:
+          - 101
+          - 133
+        containers:
+          - 102
