@@ -57,25 +57,25 @@ sections:
             tap_action:
               action: more-info
 
-      - type: heading
-        heading: Speedtest
-        heading_style: subtitle
-        icon: mdi:speedometer
-        badges:
-          - type: entity
-            entity: sensor.speedtest_ping
-            tap_action:
-              action: more-info
-          - type: entity
-            entity: sensor.speedtest_download
-            color: green
-            tap_action:
-              action: more-info
-          - type: entity
-            entity: sensor.speedtest_upload
-            color: orange
-            tap_action:
-              action: more-info
+      # - type: heading
+      #   heading: Speedtest
+      #   heading_style: subtitle
+      #   icon: mdi:speedometer
+      #   badges:
+      #     - type: entity
+      #       entity: sensor.speedtest_ping
+      #       tap_action:
+      #         action: more-info
+      #     - type: entity
+      #       entity: sensor.speedtest_download
+      #       color: green
+      #       tap_action:
+      #         action: more-info
+      #     - type: entity
+      #       entity: sensor.speedtest_upload
+      #       color: orange
+      #       tap_action:
+      #         action: more-info
 
       - graph: line
         type: sensor
@@ -181,6 +181,6 @@ sections:
           show_header_toggle: false
         filter:
           include:
-            - entity_id: "binary_sensor.uptimekuma_*"
+            - entity_id: "sensor.uptimekuma_*_status"
               sort:
                 method: name
