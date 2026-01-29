@@ -1,0 +1,41 @@
+sun:
+  template:
+    - sensor:
+        - name: "Sun Next Rising"
+          device_class: timestamp
+          state: >-
+            {{ state_attr('sun.sun', 'next_rising') }}
+          availability: >-
+            {{ (state_attr('sun.sun', 'elevation') | float(0)) < 0 }}
+
+        - name: "Sun Next Setting"
+          device_class: timestamp
+          state: >-
+            {{ state_attr('sun.sun', 'next_setting') }}
+          availability: >-
+            {{ (state_attr('sun.sun', 'elevation') | float(0)) >= 0 }}
+
+        - name: "Next Sunrise"
+          state: >-
+            {{ as_timestamp(state_attr('sun.sun', 'next_rising')) | timestamp_custom('%H:%M') }}
+          icon: mdi:weather-sunset-up
+
+        - name: "Next Sunset"
+          state: >-
+            {{ as_timestamp(state_attr('sun.sun', 'next_setting')) | timestamp_custom('%H:%M') }}
+          icon: mdi:weather-sunset-down
+
+        - name: "Sun Elevation"
+          state: >-
+            {{ state_attr('sun.sun', 'elevation') | float(0) }}
+          unit_of_measurement: "°"
+          icon: mdi:elevation-rise
+
+        - name: "Nighttime"
+          state: >-
+            {% if (state_attr('sun.sun', 'elevation') | float(0)) >= 0 %}
+              40
+            {% else %}
+              -40
+            {% endif %}
+          icon: mdi:elevation-rise

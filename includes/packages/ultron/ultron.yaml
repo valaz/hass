@@ -1,10 +1,8 @@
 ultron:
-  sensor:
-    - platform: template
-      sensors:
-        ultron_ip:
-          friendly_name: "Ultron IP"
-          value_template: !secret ultron_ip
+  template:
+    - sensor:
+        - name: "Ultron IP"
+          state: !secret ultron_ip
 
   script:
     ultron_disks_spinup:
@@ -25,8 +23,9 @@ ultron:
           value_template: >
             {{ now().year == 2025 and now().month == 5 and now().day >= 3 and now().day <= 10 }}
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: |
               Сервер выключается по расписанию
         - service: switch.turn_off

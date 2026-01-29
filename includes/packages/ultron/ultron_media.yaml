@@ -73,18 +73,27 @@ ultron_media:
   template:
     - sensor:
         - name: "Ultron Media Movies Total Size"
-          unit_of_measurement: "GB"
+          unit_of_measurement: "GiB"
+          device_class: data_size
+          state_class: measurement
           icon: mdi:folder-multiple
-          state: >
-            {% set movies = states('sensor.ultron_media_movies_size') | float(0) %}
-            {% set downloads = states('sensor.ultron_media_downloads_movies_size') | float(0) %}
-            {% set cartoons = states('sensor.ultron_media_cartoons_movies_size') | float(0) %}
-            {{ movies + downloads + cartoons }}
+          state: >-
+            {% set sources = [
+              'sensor.ultron_media_movies_size',
+              'sensor.ultron_media_downloads_movies_size',
+              'sensor.ultron_media_cartoons_movies_size'
+            ] %}
+            {{ sources | map('states') | map('float', 0) | sum | round(2) }}
+
         - name: "Ultron Media Series Total Size"
-          unit_of_measurement: "GB"
+          unit_of_measurement: "GiB"
+          device_class: data_size
+          state_class: measurement
           icon: mdi:folder-multiple
-          state: >
-            {% set series = states('sensor.ultron_media_series_size') | float(0) %}
-            {% set downloads = states('sensor.ultron_media_downloads_series_size') | float(0) %}
-            {% set cartoons = states('sensor.ultron_media_cartoons_series_size') | float(0) %}
-            {{ series + downloads + cartoons }}
+          state: >-
+            {% set sources = [
+              'sensor.ultron_media_series_size',
+              'sensor.ultron_media_downloads_series_size',
+              'sensor.ultron_media_cartoons_series_size'
+            ] %}
+            {{ sources | map('states') | map('float', 0) | sum | round(2) }}

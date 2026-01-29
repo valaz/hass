@@ -31,8 +31,8 @@ cards:
         title: "Текущее состояние"
         # show_header_toggle: false
         entities:
-          - entity: sensor.last_boot_custom
-          - entity: sensor.online_custom
+          - entity: sensor.system_monitor_last_boot
+          - entity: sensor.online
           - entity: sensor.time
             name: Текущее время
             icon: mdi:clock-outline

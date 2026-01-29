@@ -1,40 +1,19 @@
 telegram:
-  sensor:
-    - platform: template
-      sensors:
-        unavailable_now_light:
-          friendly_name: "Всего недоступных светильников - "
-          value_template: "{{states.light | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
-          icon_template: mdi:counter
-
-        unavailable_now_switch:
-          friendly_name: "Всего недоступных реле - "
-          value_template: "{{states.switch | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
-          icon_template: mdi:counter
-
-        unavailable_now_sensor:
-          friendly_name: "Всего недоступных сенсоров - "
-          value_template: "{{states.sensor | selectattr ('state', 'equalto', 'unavailable') | list | length - 1 }}"
-          icon_template: mdi:counter
-
-        unavailable_now_binary_sensor:
-          friendly_name: "Всего недоступных бинарных сенсоров - "
-          value_template: "{{states.binary_sensor | selectattr ('state', 'equalto', 'unavailable') | list | length}}"
-          icon_template: mdi:counter
-
   script:
     send_message_1:
       alias: Отправка через сервис уведомлений
       sequence:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: "Текущее время - {{ states('sensor.time') }} . Все в порядке"
 
     system_report:
       alias: Отправка отчета о состоянии системы
       sequence:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: |
               {{"\U0001F4BB"}} Состояние системы
               {{"\U0001F567"}} Отчет за {{ states('sensor.time_date') }}
@@ -46,8 +25,9 @@ telegram:
     homelab_report:
       alias: Отправка отчета о состоянии homelab
       sequence:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: |
               {{"\U00002699"}} Homelab
               {{"\U0001F567"}} Отчет за {{ states('sensor.time_date') }}
@@ -69,8 +49,9 @@ telegram:
           event_data:
             command: "/start"
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: "commands"
             data:
               keyboard:
@@ -83,8 +64,9 @@ telegram:
         - platform: homeassistant
           event: start
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: |
               {{"\U0001F4AC"}} Основной сервер Hass 
               {{"\U0001F567"}} Зафиксирован запуск в {{ states('sensor.time_date') }} 
@@ -127,8 +109,9 @@ telegram:
           entity_id: sensor.ultron_cpu_temperature
           above: 84
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: |
               {{"\U0001F975"}} Температура CPU увеличилась - {{ states('sensor.ultron_cpu_temperature') }} °C.
 
@@ -140,8 +123,9 @@ telegram:
           entity_id: sensor.ultron_cpu_temperature
           below: 85
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: |
               {{"\U0001F976"}} Температура CPU уменьшилась - {{ states('sensor.ultron_cpu_temperature') }} °C.
 
@@ -166,8 +150,9 @@ telegram:
           above: 48
           for: "00:01:00"
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Parity увеличилась - {{ states('sensor.ultron_parity_disk_temperature') }} °C.
 
@@ -180,8 +165,9 @@ telegram:
           below: 46
           for: "00:05:00"
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Parity уменьшилась - {{ states('sensor.ultron_parity_disk_temperature') }} °C.
 
@@ -206,8 +192,9 @@ telegram:
           above: 48
           for: "00:01:00"
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Disk1 увеличилась - {{ states('sensor.ultron_disk_1_temperature') }} °C.
 
@@ -220,8 +207,9 @@ telegram:
           below: 46
           for: "00:05:00"
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Disk1 уменьшилась - {{ states('sensor.ultron_disk_1_temperature') }} °C.
 
@@ -231,8 +219,9 @@ telegram:
         platform: event
         event_type: transmission_downloaded_torrent
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             title: "Загрузка завершена!"
             message: |
               {{"\U00002714"}} {{trigger.event.data.name}}
@@ -243,8 +232,9 @@ telegram:
         platform: event
         event_type: transmission_started_torrent
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             title: "Загрузка началась!"
             message: |
               {{"\U00002795"}} {{trigger.event.data.name}}
@@ -255,8 +245,9 @@ telegram:
         platform: event
         event_type: transmission_removed_torrent
       action:
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             title: "Торрент удален!"
             message: |
               {{"\U00002796"}} {{trigger.event.data.name}}

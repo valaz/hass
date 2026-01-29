@@ -21,60 +21,65 @@ ultron_disks:
         - tg_valaz
         - mobile_app_iphone_12_az
 
-  binary_sensor:
-    - platform: template
-      sensors:
-        ultron_disk_parity_is_hot:
-          friendly_name: "Parity Disk горячий"
-          value_template: >-
+  template:
+    - binary_sensor:
+        - name: "Ultron Disk Parity is hot"
+          state: >-
             {% set temp = states('sensor.ultron_parity_disk_temperature') | float %}
             {% set state = states('sensor.ultron_parity_disk_state') %}
             {{ temp > 44 and state != 'standby' }}
 
-        ultron_disk_1_is_hot:
-          friendly_name: "Disk 1 горячий"
-          value_template: >-
+        - name: "Ultron Disk 1 is hot"
+          state: >-
             {% set temp = states('sensor.ultron_disk_1_temperature') | float %}
             {% set state = states('sensor.ultron_disk_1_state') %}
             {{ temp > 44 and state != 'standby' }}
 
-        ultron_disk_2_is_hot:
-          friendly_name: "Disk 2 горячий"
-          value_template: >-
+        - name: "Ultron Disk 2 is hot"
+          state: >-
             {% set temp = states('sensor.ultron_disk_2_temperature') | float %}
             {% set state = states('sensor.ultron_disk_2_state') %}
             {{ temp > 44 and state != 'standby' }}
 
-        ultron_disks_are_hot:
-          friendly_name: "Диски горячие"
-          value_template: >-
-            {{ is_state('binary_sensor.ultron_disk_parity_is_hot', 'on') or is_state('binary_sensor.ultron_disk_1_is_hot', 'on') or is_state('binary_sensor.ultron_disk_2_is_hot', 'on') }}
+        - name: "Ultron Disk 3 is hot"
+          state: >-
+            {% set temp = states('sensor.ultron_disk_3_temperature') | float %}
+            {% set state = states('sensor.ultron_disk_3_state') %}
+            {{ temp > 44 and state != 'standby' }}
 
-        ultron_parity_check_in_progress:
-          friendly_name: "Parity-Check in progress"
-          value_template: >-
-            {{ states('sensor.ultron_parity_progress') | float > 0 }}
+        - name: "Ultron Disks are hot"
+          state: >-
+            {{ is_state('binary_sensor.ultron_disk_parity_is_hot', 'on')
+               or is_state('binary_sensor.ultron_disk_1_is_hot', 'on')
+               or is_state('binary_sensor.ultron_disk_2_is_hot', 'on')
+               or is_state('binary_sensor.ultron_disk_3_is_hot', 'on') }}
+
+    - sensor:
+        - name: "C 192.168.1.11 Rootfs Array Disk Used"
+          unit_of_measurement: "GiB"
+          device_class: data_size
+          state: >-
+            {{ (states('sensor.192_168_1_11_rootfs_disk1_disk_used') | float(0))
+            + (states('sensor.192_168_1_11_rootfs_disk2_disk_used') | float(0))
+            + (states('sensor.192_168_1_11_rootfs_disk3_disk_used') | float(0)) }}
+
+        - name: "C 192.168.1.11 Rootfs Array Disk Free"
+          unit_of_measurement: "GiB"
+          device_class: data_size
+          state: >-
+            {{ (states('sensor.192_168_1_11_rootfs_disk1_disk_free') | float(0))
+            + (states('sensor.192_168_1_11_rootfs_disk2_disk_free') | float(0))
+            + (states('sensor.192_168_1_11_rootfs_disk3_disk_free') | float(0)) }}
+
+        - name: "C 192.168.1.11 Rootfs Array Disk Usage"
+          unit_of_measurement: "%"
+          state: >-
+            {% set used = states('sensor.c_192_168_1_11_rootfs_array_disk_used') | float(0) %}
+            {% set free = states('sensor.c_192_168_1_11_rootfs_array_disk_free') | float(0) %}
+            {% set total = used + free %}
+            {{ ((used / total) * 100) | round(2) if total > 0 else 0 }}
 
   sensor:
-    - platform: template
-      sensors:
-        c_192_168_1_11_rootfs_array_disk_used:
-          unit_of_measurement: "GiB"
-          device_class: data_size
-          value_template: >
-            {{ (states('sensor.192_168_1_11_rootfs_disk1_disk_used') | float) + (states('sensor.192_168_1_11_rootfs_disk2_disk_used') | float) + (states('sensor.192_168_1_11_rootfs_disk3_disk_used') | float) }}
-        c_192_168_1_11_rootfs_array_disk_free:
-          unit_of_measurement: "GiB"
-          device_class: data_size
-          value_template: >
-            {{ (states('sensor.192_168_1_11_rootfs_disk1_disk_free') | float) + (states('sensor.192_168_1_11_rootfs_disk2_disk_free') | float) + (states('sensor.192_168_1_11_rootfs_disk3_disk_free') | float)  }}
-        c_192_168_1_11_rootfs_array_disk_usage:
-          unit_of_measurement: "%"
-          value_template: >
-            {% set array_total_size = (states('sensor.c_192_168_1_11_rootfs_array_disk_used') | float) + (states('sensor.c_192_168_1_11_rootfs_array_disk_free') | float) %}
-            {% set array_used_size = states('sensor.c_192_168_1_11_rootfs_array_disk_used') | float %}
-            {{ (array_used_size / array_total_size * 100.0 | float) | round(2) }}
-
     - platform: history_stats
       name: Ultron Parity Disk Standby Time
       entity_id: sensor.ultron_parity_disk_state
@@ -113,6 +118,20 @@ ultron_disks:
     - platform: history_stats
       name: Ultron Disk 2 Standby Ratio
       entity_id: sensor.ultron_disk_2_state
+      state: "standby"
+      type: ratio
+      start: "{{ today_at() }}"
+      end: "{{ now() }}"
+    - platform: history_stats
+      name: Ultron Disk 3 Standby Time
+      entity_id: sensor.ultron_disk_3_state
+      state: "standby"
+      type: time
+      start: "{{ today_at() }}"
+      end: "{{ now() }}"
+    - platform: history_stats
+      name: Ultron Disk 3 Standby Ratio
+      entity_id: sensor.ultron_disk_3_state
       state: "standby"
       type: ratio
       start: "{{ today_at() }}"

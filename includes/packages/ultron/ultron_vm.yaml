@@ -29,28 +29,25 @@ ultron_vm:
     start_ultron_vm_fedora: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh start 'Fedora'"
     shutdown_ultron_vm_fedora: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh shutdown 'Fedora'"
 
-  switch:
-    - platform: template
-      switches:
-        c_ultron_vm_htpc:
-          friendly_name: "VM HTPC"
-          icon_template: mdi:microsoft-windows
-          value_template: "{{ is_state('sensor.vm_htpc_state', 'running') }}"
-          turn_on:
-            - service: shell_command.start_ultron_vm_htpc
-          turn_off:
-            - service: shell_command.shutdown_ultron_vm_htpc
+  template:
+  - switch:
+    - name: VM HTPC
+      default_entity_id: switch.c_ultron_vm_htpc
+      state: '{{ is_state(''sensor.vm_htpc_state'', ''running'') }}'
+      icon: mdi:microsoft-windows
+      turn_on:
+      - action: shell_command.start_ultron_vm_htpc
+      turn_off:
+      - action: shell_command.shutdown_ultron_vm_htpc
 
-    - platform: template
-      switches:
-        c_ultron_vm_fedora:
-          friendly_name: "VM Fedora"
-          icon_template: mdi:fedora
-          value_template: "{{ is_state('sensor.vm_fedora_state', 'running') }}"
-          turn_on:
-            - service: shell_command.start_ultron_vm_fedora
-          turn_off:
-            - service: shell_command.shutdown_ultron_vm_fedora
+    - name: VM Fedora
+      default_entity_id: switch.c_ultron_vm_fedora
+      state: '{{ is_state(''sensor.vm_fedora_state'', ''running'') }}'
+      icon: mdi:fedora
+      turn_on:
+      - action: shell_command.start_ultron_vm_fedora
+      turn_off:
+      - action: shell_command.shutdown_ultron_vm_fedora
 
   command_line:
     - switch:

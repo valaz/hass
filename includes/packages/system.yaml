@@ -9,8 +9,9 @@ system:
             password: !secret backup_encryption_password
             compressed: true
             location: Hetzner
-        - service: notify.tg_valaz
+        - action: notify.send_message
           data:
+            entity_id: !secret tg_valaz_notify_entity
             message: "📦✅ {{ states('sensor.time') }} Full Backup to Hetzner is completed"
 
   automation:
