@@ -23,31 +23,71 @@ ultron_vm:
           field: state
           database: homelab_telegraf
 
+        - name: "VM HAOS State"
+          unique_id: c_ultron_vm_haos_state
+          value_template: "{{ value }}"
+          group_function: last
+          where: '"vm" = ''HAOS'' AND "host" = ''ultron'''
+          measurement: '"virsh"'
+          field: state
+          database: homelab_telegraf
+
+        - name: "VM ProxyVM State"
+          unique_id: c_ultron_vm_proxyvm_state
+          value_template: "{{ value }}"
+          group_function: last
+          where: '"vm" = ''ProxyVM'' AND "host" = ''ultron'''
+          measurement: '"virsh"'
+          field: state
+          database: homelab_telegraf
+
   shell_command:
     start_ultron_vm_htpc: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh start 'HTPC'"
     shutdown_ultron_vm_htpc: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh shutdown 'HTPC'"
     start_ultron_vm_fedora: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh start 'Fedora'"
     shutdown_ultron_vm_fedora: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh shutdown 'Fedora'"
+    start_ultron_vm_haos: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh start 'HAOS'"
+    shutdown_ultron_vm_haos: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh shutdown 'HAOS'"
+    start_ultron_vm_proxyvm: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh start 'ProxyVM'"
+    shutdown_ultron_vm_proxyvm: "ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@{{ states('sensor.ultron_ip') }} virsh shutdown 'ProxyVM'"
 
   template:
-  - switch:
-    - name: VM HTPC
-      default_entity_id: switch.c_ultron_vm_htpc
-      state: '{{ is_state(''sensor.vm_htpc_state'', ''running'') }}'
-      icon: mdi:microsoft-windows
-      turn_on:
-      - action: shell_command.start_ultron_vm_htpc
-      turn_off:
-      - action: shell_command.shutdown_ultron_vm_htpc
+    - switch:
+        - name: VM HTPC
+          default_entity_id: switch.c_ultron_vm_htpc
+          state: "{{ is_state('sensor.vm_htpc_state', 'running') }}"
+          icon: mdi:microsoft-windows
+          turn_on:
+            - action: shell_command.start_ultron_vm_htpc
+          turn_off:
+            - action: shell_command.shutdown_ultron_vm_htpc
 
-    - name: VM Fedora
-      default_entity_id: switch.c_ultron_vm_fedora
-      state: '{{ is_state(''sensor.vm_fedora_state'', ''running'') }}'
-      icon: mdi:fedora
-      turn_on:
-      - action: shell_command.start_ultron_vm_fedora
-      turn_off:
-      - action: shell_command.shutdown_ultron_vm_fedora
+        - name: VM Fedora
+          default_entity_id: switch.c_ultron_vm_fedora
+          state: "{{ is_state('sensor.vm_fedora_state', 'running') }}"
+          icon: mdi:fedora
+          turn_on:
+            - action: shell_command.start_ultron_vm_fedora
+          turn_off:
+            - action: shell_command.shutdown_ultron_vm_fedora
+
+        - name: VM HAOS
+          default_entity_id: switch.c_ultron_vm_haos
+          state: "{{ is_state('sensor.vm_haos_state', 'running') }}"
+          icon: mdi:home-assistant
+          turn_on:
+            - action: shell_command.start_ultron_vm_haos
+          turn_off:
+            - action: shell_command.shutdown_ultron_vm_haos
+
+        - name: VM ProxyVM
+          default_entity_id: switch.c_ultron_vm_proxyvm
+          state: "{{ is_state('sensor.vm_proxyvm_state', 'running') }}"
+          icon: mdi:debian
+          turn_on:
+            - action: shell_command.start_ultron_vm_proxyvm
+          turn_off:
+            - action: shell_command.shutdown_ultron_vm_proxyvm
 
   command_line:
     - switch:

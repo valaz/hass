@@ -88,6 +88,22 @@ sections:
         show_entity_picture: false
         icon: mdi:microsoft-windows
         color: light-blue
+      - type: tile
+        entity: switch.c_ultron_vm_haos
+        features_position: bottom
+        vertical: false
+        name: HAOS
+        show_entity_picture: false
+        icon: mdi:home-assistant
+        color: blue
+      - type: tile
+        entity: switch.c_ultron_vm_proxyvm
+        features_position: bottom
+        vertical: false
+        name: ProxyVM
+        show_entity_picture: false
+        icon: mdi:debian
+        color: light-green
 
   - type: grid ###   Ultron Docker    ###
     cards:
