@@ -1,0 +1,69 @@
+air_humidifier:
+  automation:
+    - alias: "[Humidifier] Low water level notification"
+      initial_state: true
+      trigger:
+        - platform: numeric_state
+          entity_id: sensor.zhimi_ca4_713f_water_level
+          below: 40
+          id: "40"
+        - platform: numeric_state
+          entity_id: sensor.zhimi_ca4_713f_water_level
+          below: 20
+          id: "20"
+        - platform: numeric_state
+          entity_id: sensor.zhimi_ca4_713f_water_level
+          below: 11
+          id: "11"
+      action:
+        - action: notify.send_message
+          data:
+            entity_id: notify.tg_eliia
+            message: |
+              ⚠️ **В увлажнителе заканчивается вода!**
+
+              Текущий уровень воды: {{ states('sensor.zhimi_ca4_713f_water_level') }}% 
+              Влажность в комнате: {{ states('sensor.zhimi_ca4_713f_relative_humidity') }}% 💧
+
+    - alias: "[Humidifier] Water refilled thank you"
+      initial_state: true
+      trigger:
+        - platform: state
+          entity_id: sensor.zhimi_ca4_713f_water_level
+      condition:
+        # Проверяем, что уровень воды вырос (новое состояние больше старого)
+        - condition: template
+          value_template: >
+            {% set old = trigger.from_state.state | float(0) %}
+            {% set new = trigger.to_state.state | float(0) %}
+            {{ new > old + 10 }}
+      action:
+        - action: notify.send_message
+          data:
+            entity_id: notify.tg_eliia
+            message: |
+              ✅ **Спасибо, что залили водичку!**
+
+              Текущий уровень воды: {{ states('sensor.zhimi_ca4_713f_water_level') }}%
+              Теперь увлажнитель снова в строю.
+              Влажность в комнате: {{ states('sensor.zhimi_ca4_713f_relative_humidity') }}% 💧
+
+    - alias: "[Humidifier] Evening status report"
+      initial_state: true
+      trigger:
+        - platform: time
+          at: "21:00:00"
+      action:
+        - action: notify.send_message
+          data:
+            entity_id: notify.tg_eliia
+            message: |
+              🌙 **Вечерний статус увлажнителя**
+
+              Текущий уровень воды: {{ states('sensor.zhimi_ca4_713f_water_level') }}%
+              Влажность в комнате: {{ states('sensor.zhimi_ca4_713f_relative_humidity') }}% 💧
+              {% if states('sensor.zhimi_ca4_713f_water_level') | float(0) < 50 %}
+              Воды меньше половины, можно немного добавить, чтобы хватило на всю ночь.
+              {% else %}
+              Воды достаточно, всё ок! Спокойной ночи! 😴
+              {% endif %}
