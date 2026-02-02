@@ -5,7 +5,7 @@ telegram:
       sequence:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: "Текущее время - {{ states('sensor.time') }} . Все в порядке"
 
     system_report:
@@ -13,7 +13,7 @@ telegram:
       sequence:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: |
               {{"\U0001F4BB"}} Состояние системы
               {{"\U0001F567"}} Отчет за {{ states('sensor.time_date') }}
@@ -27,7 +27,7 @@ telegram:
       sequence:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: |
               {{"\U00002699"}} Homelab
               {{"\U0001F567"}} Отчет за {{ states('sensor.time_date') }}
@@ -51,7 +51,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: "commands"
             data:
               keyboard:
@@ -66,7 +66,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: |
               {{"\U0001F4AC"}} Основной сервер Hass 
               {{"\U0001F567"}} Зафиксирован запуск в {{ states('sensor.time_date') }} 
@@ -111,7 +111,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: |
               {{"\U0001F975"}} Температура CPU увеличилась - {{ states('sensor.ultron_cpu_temperature') }} °C.
 
@@ -125,7 +125,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: |
               {{"\U0001F976"}} Температура CPU уменьшилась - {{ states('sensor.ultron_cpu_temperature') }} °C.
 
@@ -152,7 +152,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Parity увеличилась - {{ states('sensor.ultron_parity_disk_temperature') }} °C.
 
@@ -167,7 +167,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Parity уменьшилась - {{ states('sensor.ultron_parity_disk_temperature') }} °C.
 
@@ -194,7 +194,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Disk1 увеличилась - {{ states('sensor.ultron_disk_1_temperature') }} °C.
 
@@ -209,7 +209,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Disk1 уменьшилась - {{ states('sensor.ultron_disk_1_temperature') }} °C.
 
@@ -221,7 +221,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             title: "Загрузка завершена!"
             message: |
               {{"\U00002714"}} {{trigger.event.data.name}}
@@ -234,7 +234,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             title: "Загрузка началась!"
             message: |
               {{"\U00002795"}} {{trigger.event.data.name}}
@@ -247,7 +247,7 @@ telegram:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             title: "Торрент удален!"
             message: |
               {{"\U00002796"}} {{trigger.event.data.name}}

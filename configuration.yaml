@@ -131,11 +131,6 @@ influxdb:
     - type
     - friendly_name
 
-notify:
-  - name: tg_valaz
-    platform: telegram
-    chat_id: !secret tg_valaz_id
-
 pi_hole:
   host: 192.168.1.42
   api_key: !secret pi_hole_api_key

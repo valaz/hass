@@ -11,7 +11,7 @@ system:
             location: Hetzner
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: "📦✅ {{ states('sensor.time') }} Full Backup to Hetzner is completed"
 
   automation:

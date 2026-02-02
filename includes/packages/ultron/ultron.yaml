@@ -25,7 +25,7 @@ ultron:
       action:
         - action: notify.send_message
           data:
-            entity_id: !secret tg_valaz_notify_entity
+            entity_id: notify.tg_azat
             message: |
               Сервер выключается по расписанию
         - service: switch.turn_off
