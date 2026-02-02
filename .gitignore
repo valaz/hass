@@ -41,3 +41,4 @@ node-red/*
 .storage/*
 custom_components/*
 www/*
+.ha_run.lock
