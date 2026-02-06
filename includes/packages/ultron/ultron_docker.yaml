@@ -195,6 +195,7 @@ ultron_docker:
       icon: mdi:docker
       headers:
         Content-Type: application/json
+
     - platform: rest
       resource: http://192.168.1.11:8126/container/honeygain
       username: !secret ha-dockermon.username
@@ -248,6 +249,30 @@ ultron_docker:
       username: !secret ha-dockermon.username
       password: !secret ha-dockermon.password
       name: c_ultron_docker_tailscale-network
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/authentik
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_authentik
+      body_on: '{"state": "start"}'
+      body_off: '{"state": "stop"}'
+      is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
+      icon: mdi:docker
+      headers:
+        Content-Type: application/json
+
+    - platform: rest
+      resource: http://192.168.1.11:8126/container/authentik-worker
+      username: !secret ha-dockermon.username
+      password: !secret ha-dockermon.password
+      name: c_ultron_docker_authentik-worker
       body_on: '{"state": "start"}'
       body_off: '{"state": "stop"}'
       is_on_template: '{{ value_json is not none and value_json.state == "running" }}'
