@@ -142,7 +142,7 @@ ultron_disks:
     ultron_spinup_disk2: 'ssh -i /config/ultron.key -o StrictHostKeyChecking=no root@192.168.1.11 -T "uptime > /mnt/disk2/share/hass-disk2-check.txt"'
 
   automation:
-    - alias: "Start Telegram for Transmission"
+    - alias: "[Ultron Torrents] Start Telegram for Transmission"
       trigger:
         - platform: state
           entity_id: switch.c_ultron_docker_transmission
@@ -162,7 +162,7 @@ ultron_disks:
           target:
             entity_id: switch.c_ultron_docker_transmission_telegram
 
-    - alias: "[Ultron] Start Disks timer when disks are hot"
+    - alias: "[Ultron Disks] Start Disks timer when disks are hot"
       trigger:
         - platform: state
           entity_id: binary_sensor.ultron_disks_are_hot
@@ -172,7 +172,7 @@ ultron_disks:
           target:
             entity_id: timer.ultron_disks
 
-    - alias: "[Ultron] Spinup Disks when they are still hot"
+    - alias: "[Ultron Disks] Spinup Disks when they are still hot"
       trigger:
         - platform: event
           event_type: timer.finished

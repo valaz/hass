@@ -15,7 +15,7 @@ system:
             message: "📦✅ {{ states('sensor.time') }} Full Backup to Hetzner is completed"
 
   automation:
-    - alias: "[System] Nightly Full Backup"
+    - alias: "[HA Backup] Nightly Full Backup"
       trigger:
         platform: time
         at: "04:30:00"
@@ -35,7 +35,7 @@ system:
             compressed: true
             name: Full_Backup_{{ now().strftime('%Y-%m-%d') }}
 
-    - alias: "[System] Nightly Full Backup"
+    - alias: "[HA Backup] Nightly Full Backup to Hetzner"
       trigger:
         platform: time
         at: "04:30:00"

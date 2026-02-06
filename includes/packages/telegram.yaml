@@ -40,8 +40,7 @@ telegram:
 
   # https://apps.timwhitlock.info/emoji/tables/unicode
   automation:
-    - id: Клавиатура телеграмм бота
-      alias: telegram_keyboard
+    - alias: "[Telegram Commands] /start"
       initial_state: true
       trigger:
         - platform: event
@@ -57,8 +56,7 @@ telegram:
               keyboard:
                 - "/report, /homelab"
 
-    - id: Отчет при запуске системы
-      alias: start_message
+    - alias: "[Telegram] on HA start"
       initial_state: true
       trigger:
         - platform: homeassistant
@@ -75,8 +73,7 @@ telegram:
         - service: script.turn_on
           entity_id: script.system_report
 
-    - id: Запрос на отчет
-      alias: send_report
+    - alias: "[Telegram Commands] /report"
       initial_state: true
       trigger:
         - platform: event
@@ -88,8 +85,7 @@ telegram:
           entity_id:
             - script.system_report
 
-    - id: Запрос на homelab
-      alias: send_homelab_report
+    - alias: "[Telegram Commands] /homelab"
       initial_state: true
       trigger:
         - platform: event
@@ -101,8 +97,7 @@ telegram:
           entity_id:
             - script.homelab_report
 
-    - id: CPU горячий
-      alias: cpu_temp_is_hot
+    - alias: "[Ultron CPU] Temeperature is high"
       initial_state: true
       trigger:
         - platform: numeric_state
@@ -115,8 +110,7 @@ telegram:
             message: |
               {{"\U0001F975"}} Температура CPU увеличилась - {{ states('sensor.ultron_cpu_temperature') }} °C.
 
-    - id: CPU теплый
-      alias: cpu_temp_is_ok
+    - alias: "[Ultron CPU] Temeperature is ok"
       initial_state: true
       trigger:
         - platform: numeric_state
@@ -129,8 +123,7 @@ telegram:
             message: |
               {{"\U0001F976"}} Температура CPU уменьшилась - {{ states('sensor.ultron_cpu_temperature') }} °C.
 
-    - id: WD Elements Parity горячий
-      alias: wd_elements_is_hot
+    - alias: "[Ultron Disks] Disk Parity Temeperature is high"
       initial_state: true
       trigger:
         - platform: numeric_state
@@ -156,8 +149,7 @@ telegram:
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Parity увеличилась - {{ states('sensor.ultron_parity_disk_temperature') }} °C.
 
-    - id: WD Elements Parity теплый
-      alias: wd_elements_is_ok
+    - alias: "[Ultron Disks] Disk Parity Temeperature is ok"
       initial_state: true
       trigger:
         - platform: numeric_state
@@ -171,8 +163,7 @@ telegram:
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Parity уменьшилась - {{ states('sensor.ultron_parity_disk_temperature') }} °C.
 
-    - id: WD Elements Disk1 горячий
-      alias: wd_elements_is_hot
+    - alias: "[Ultron Disks] Disk1 Temeperature is high"
       initial_state: true
       trigger:
         - platform: numeric_state
@@ -198,8 +189,7 @@ telegram:
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Disk1 увеличилась - {{ states('sensor.ultron_disk_1_temperature') }} °C.
 
-    - id: WD Elements Disk1 теплый
-      alias: wd_elements_is_ok
+    - alias: "[Ultron Disks] Disk1 Temeperature is ok"
       initial_state: true
       trigger:
         - platform: numeric_state
@@ -213,8 +203,7 @@ telegram:
             message: |
               {{"\U0001F4BD"}} Температура WD Elements Disk1 уменьшилась - {{ states('sensor.ultron_disk_1_temperature') }} °C.
 
-    - id: Torrent is completed
-      alias: torrent_is_completed
+    - alias: "[Ultron Torrents] Downnload is completed"
       trigger:
         platform: event
         event_type: transmission_downloaded_torrent
@@ -226,8 +215,7 @@ telegram:
             message: |
               {{"\U00002714"}} {{trigger.event.data.name}}
 
-    - id: Torrent is started
-      alias: torrent_is_started
+    - alias: "[Ultron Torrents] Downnload is started"
       trigger:
         platform: event
         event_type: transmission_started_torrent
@@ -239,8 +227,7 @@ telegram:
             message: |
               {{"\U00002795"}} {{trigger.event.data.name}}
 
-    - id: Torrent is removed
-      alias: torrent_is_removed
+    - alias: "[Ultron Torrents] Torrent is removed"
       trigger:
         platform: event
         event_type: transmission_removed_torrent

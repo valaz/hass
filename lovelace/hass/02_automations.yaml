@@ -31,8 +31,55 @@ sections:
                           secondary_info: last-triggered
                         sort:
                           method: name
-                  exclude:
-                    - state: "off"
+                    exclude:
+                      - state: "off"
+          - attributes:
+              label: Backups
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:auto-entities
+                  show_empty: false
+                  card:
+                    type: entities
+                    show_header_toggle: false
+                  filter:
+                    include:
+                      - domain: automation
+                        name: "*HA Backup]*"
+                        options:
+                          secondary_info: last-triggered
+                        sort:
+                          method: name
+                    exclude:
+                      - state: "off"
+          - attributes:
+              label: Telegran
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:auto-entities
+                  show_empty: false
+                  card:
+                    type: entities
+                    show_header_toggle: false
+                  filter:
+                    include:
+                      - domain: automation
+                        name: "*Telegram]*"
+                        options:
+                          secondary_info: last-triggered
+                        sort:
+                          method: name
+                      - domain: automation
+                        name: "*Telegram Commands]*"
+                        options:
+                          secondary_info: last-triggered
+                        sort:
+                          method: name
+                    exclude:
+                      - state: "off"
+
   - type: grid ###   Ultron    ###
     cards:
       - type: heading
@@ -59,8 +106,8 @@ sections:
                           secondary_info: last-triggered
                         sort:
                           method: name
-                  exclude:
-                    - state: "off"
+                    exclude:
+                      - state: "off"
           - attributes:
               label: Docker
             card:
@@ -75,6 +122,95 @@ sections:
                     include:
                       - domain: automation
                         name: "*Ultron Docker]*"
+                        options:
+                          secondary_info: last-triggered
+                        sort:
+                          method: name
+                  exclude:
+                    - state: "off"
+          - attributes:
+              label: Disks
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:auto-entities
+                  show_empty: false
+                  card:
+                    type: entities
+                    show_header_toggle: false
+                  filter:
+                    include:
+                      - domain: automation
+                        name: "*Ultron Disks]*"
+                        options:
+                          secondary_info: last-triggered
+                        sort:
+                          method: name
+                  exclude:
+                    - state: "off"
+          - attributes:
+              label: CPU
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:auto-entities
+                  show_empty: false
+                  card:
+                    type: entities
+                    show_header_toggle: false
+                  filter:
+                    include:
+                      - domain: automation
+                        name: "*Ultron CPU]*"
+                        options:
+                          secondary_info: last-triggered
+                        sort:
+                          method: name
+                  exclude:
+                    - state: "off"
+          - attributes:
+              label: Torrents
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:auto-entities
+                  show_empty: false
+                  card:
+                    type: entities
+                    show_header_toggle: false
+                  filter:
+                    include:
+                      - domain: automation
+                        name: "*Ultron Torrents]*"
+                        options:
+                          secondary_info: last-triggered
+                        sort:
+                          method: name
+                  exclude:
+                    - state: "off"
+
+  - type: grid ###   Home    ###
+    cards:
+      - type: heading
+        heading_style: title
+        heading: Home
+        icon: mdi:home-assistant
+      - type: custom:tabbed-card
+        tabs:
+          - attributes:
+              label: Humidifier
+            card:
+              type: vertical-stack
+              cards:
+                - type: custom:auto-entities
+                  show_empty: false
+                  card:
+                    type: entities
+                    show_header_toggle: false
+                  filter:
+                    include:
+                      - domain: automation
+                        name: "*Humidifier]*"
                         options:
                           secondary_info: last-triggered
                         sort:
@@ -106,10 +242,19 @@ sections:
             - name: "*Ultron Docker]*"
             - name: "*Ultron]*"
             - name: "*HASS]*"
+            - name: "*HA Backup]*"
+            - name: "*Telegram]*"
+            - name: "*Telegram Commands]*"
+            - name: "*Humidifier]*"
+            - name: "*Ultron Disks]*"
+            - name: "*Ultron CPU]*"
+            - name: "*Ultron Torrents]*"
 
+  - type: grid ###   Disabled    ###
+    cards:
       - type: heading
         heading: Disabled Automations
-        heading_style: subtitle
+        # heading_style: subtitle
         icon: mdi:cloud-off-outline
 
       - type: custom:auto-entities
