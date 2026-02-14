@@ -16,6 +16,7 @@ system:
 
   automation:
     - alias: "[HA Backup] Nightly Full Backup"
+      initial_state: false
       trigger:
         platform: time
         at: "04:30:00"
@@ -36,6 +37,7 @@ system:
             name: Full_Backup_{{ now().strftime('%Y-%m-%d') }}
 
     - alias: "[HA Backup] Nightly Full Backup to Hetzner"
+      initial_state: false
       trigger:
         platform: time
         at: "04:30:00"
