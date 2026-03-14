@@ -73,7 +73,7 @@ sections:
         heading: Ultron VM
         icon: mdi:server
       - type: tile
-        entity: switch.c_ultron_vm_fedora
+        entity: switch.ultron_vm_fedora
         features_position: bottom
         vertical: false
         name: Fedora
@@ -81,7 +81,7 @@ sections:
         icon: mdi:fedora
         color: orange
       - type: tile
-        entity: switch.c_ultron_vm_htpc
+        entity: switch.ultron_vm_htpc
         features_position: bottom
         vertical: false
         name: HTPC
@@ -89,7 +89,7 @@ sections:
         icon: mdi:microsoft-windows
         color: light-blue
       - type: tile
-        entity: switch.c_ultron_vm_haos
+        entity: switch.ultron_vm_haos
         features_position: bottom
         vertical: false
         name: HAOS
@@ -97,7 +97,7 @@ sections:
         icon: mdi:home-assistant
         color: blue
       - type: tile
-        entity: switch.c_ultron_vm_proxyvm
+        entity: switch.ultron_vm_proxyvm
         features_position: bottom
         vertical: false
         name: ProxyVM
@@ -149,7 +149,7 @@ sections:
         icon: mdi:check-all
         badges:
           - type: entity
-            entity: sensor.ultron_parity_status
+            entity: sensor.telegraf_ultron_parity_status
             color: blue
             tap_action:
               action: more-info
@@ -160,26 +160,26 @@ sections:
         # icon: mdi:check-all
         badges:
           - type: entity
-            entity: sensor.ultron_parity_speed
+            entity: sensor.telegraf_ultron_parity_speed
             color: orange
             icon: mdi:speedometer
             tap_action:
               action: more-info
           - type: entity
-            entity: sensor.ultron_parity_progress
+            entity: sensor.telegraf_ultron_parity_progress
             color: orange
             icon: mdi:list-status
             tap_action:
               action: more-info
           - type: entity
-            entity: sensor.ultron_parity_finish_timestamp
+            entity: sensor.telegraf_ultron_parity_finish_timestamp
             color: orange
             show_icon: false
             tap_action:
               action: more-info
         visibility:
           - condition: numeric_state
-            entity: sensor.ultron_parity_progress
+            entity: sensor.telegraf_ultron_parity_progress
             below: 100
 
       # - type: heading
@@ -197,7 +197,7 @@ sections:
             show_icon: true
             color: orange
             icon: mdi:thermometer
-            entity: sensor.ultron_cache_temperature
+            entity: sensor.telegraf_ultron_cache_temperature
             tap_action:
               action: more-info
           - type: entity
@@ -205,7 +205,7 @@ sections:
             icon: mdi:thermometer
             show_icon: true
             color: orange
-            entity: sensor.ultron_cache_2_temperature
+            entity: sensor.telegraf_ultron_cache_2_temperature
             tap_action:
               action: more-info
           - type: entity
@@ -239,7 +239,7 @@ sections:
             show_icon: true
             color: orange
             icon: mdi:thermometer
-            entity: sensor.ultron_parity_disk_temperature
+            entity: sensor.telegraf_ultron_parity_disk_temperature
             tap_action:
               action: more-info
           - type: entity
@@ -247,7 +247,7 @@ sections:
             show_icon: true
             color: orange
             icon: mdi:thermometer
-            entity: sensor.ultron_disk_1_temperature
+            entity: sensor.telegraf_ultron_disk_1_temperature
             tap_action:
               action: more-info
           - type: entity
@@ -255,7 +255,7 @@ sections:
             show_icon: true
             icon: mdi:thermometer
             color: orange
-            entity: sensor.ultron_disk_2_temperature
+            entity: sensor.telegraf_ultron_disk_2_temperature
             tap_action:
               action: more-info
           - type: entity
@@ -289,7 +289,7 @@ sections:
             show_icon: true
             color: orange
             icon: mdi:thermometer
-            entity: sensor.ultron_disk_1_temperature
+            entity: sensor.telegraf_ultron_disk_1_temperature
             tap_action:
               action: more-info
           - type: entity
@@ -323,7 +323,7 @@ sections:
             show_icon: true
             icon: mdi:thermometer
             color: orange
-            entity: sensor.ultron_disk_2_temperature
+            entity: sensor.telegraf_ultron_disk_2_temperature
             tap_action:
               action: more-info
           - type: entity
@@ -357,7 +357,7 @@ sections:
             show_icon: true
             icon: mdi:thermometer
             color: orange
-            entity: sensor.ultron_disk_3_temperature
+            entity: sensor.telegraf_ultron_disk_3_temperature
             tap_action:
               action: more-info
           - type: entity

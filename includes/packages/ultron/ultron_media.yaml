@@ -5,7 +5,7 @@ ultron_media:
       username: !secret influxdb_username
       password: !secret influxdb_password
       queries:
-        - name: Ultron Media Movies Size
+        - name: Telegraf Ultron Media Movies Size
           unit_of_measurement: "GB"
           value_template: "{{ (value | float / 1073741824) | round(2) }}"
           group_function: last
@@ -13,7 +13,7 @@ ultron_media:
           measurement: '"filecount"'
           field: size_bytes
           database: homelab_telegraf
-        - name: Ultron Media Series Size
+        - name: Telegraf Ultron Media Series Size
           unit_of_measurement: "GB"
           value_template: "{{ (value | float / 1073741824) | round(2) }}"
           group_function: last
@@ -21,7 +21,7 @@ ultron_media:
           measurement: '"filecount"'
           field: size_bytes
           database: homelab_telegraf
-        - name: Ultron Media Downloads Movies Size
+        - name: Telegraf Ultron Media Downloads Movies Size
           unit_of_measurement: "GB"
           value_template: "{{ (value | float / 1073741824) | round(2) }}"
           group_function: last
@@ -29,7 +29,7 @@ ultron_media:
           measurement: '"filecount"'
           field: size_bytes
           database: homelab_telegraf
-        - name: Ultron Media Downloads Series Size
+        - name: Telegraf Ultron Media Downloads Series Size
           unit_of_measurement: "GB"
           value_template: "{{ (value | float / 1073741824) | round(2) }}"
           group_function: last
@@ -37,7 +37,7 @@ ultron_media:
           measurement: '"filecount"'
           field: size_bytes
           database: homelab_telegraf
-        - name: Ultron Media Travel Movies Size
+        - name: Telegraf Ultron Media Travel Movies Size
           unit_of_measurement: "GB"
           value_template: "{{ (value | float / 1073741824) | round(2) }}"
           group_function: last
@@ -45,7 +45,7 @@ ultron_media:
           measurement: '"filecount"'
           field: size_bytes
           database: homelab_telegraf
-        - name: Ultron Media Travel Series Size
+        - name: Telegraf Ultron Media Travel Series Size
           unit_of_measurement: "GB"
           value_template: "{{ (value | float / 1073741824) | round(2) }}"
           group_function: last
@@ -53,7 +53,7 @@ ultron_media:
           measurement: '"filecount"'
           field: size_bytes
           database: homelab_telegraf
-        - name: Ultron Media Cartoons Movies Size
+        - name: Telegraf Ultron Media Cartoons Movies Size
           unit_of_measurement: "GB"
           value_template: "{{ (value | float / 1073741824) | round(2) }}"
           group_function: last
@@ -61,7 +61,7 @@ ultron_media:
           measurement: '"filecount"'
           field: size_bytes
           database: homelab_telegraf
-        - name: Ultron Media Cartoons Series Size
+        - name: Telegraf Ultron Media Cartoons Series Size
           unit_of_measurement: "GB"
           value_template: "{{ (value | float / 1073741824) | round(2) }}"
           group_function: last
@@ -72,28 +72,28 @@ ultron_media:
 
   template:
     - sensor:
-        - name: "Ultron Media Movies Total Size"
+        - name: "Telegraf Ultron Media Movies Total Size"
           unit_of_measurement: "GiB"
           device_class: data_size
           state_class: measurement
           icon: mdi:folder-multiple
           state: >-
             {% set sources = [
-              'sensor.ultron_media_movies_size',
-              'sensor.ultron_media_downloads_movies_size',
-              'sensor.ultron_media_cartoons_movies_size'
+              'sensor.telegraf_ultron_media_movies_size',
+              'sensor.telegraf_ultron_media_downloads_movies_size',
+              'sensor.telegraf_ultron_media_cartoons_movies_size'
             ] %}
             {{ sources | map('states') | map('float', 0) | sum | round(2) }}
 
-        - name: "Ultron Media Series Total Size"
+        - name: "Telegraf Ultron Media Series Total Size"
           unit_of_measurement: "GiB"
           device_class: data_size
           state_class: measurement
           icon: mdi:folder-multiple
           state: >-
             {% set sources = [
-              'sensor.ultron_media_series_size',
-              'sensor.ultron_media_downloads_series_size',
-              'sensor.ultron_media_cartoons_series_size'
+              'sensor.telegraf_ultron_media_series_size',
+              'sensor.telegraf_ultron_media_downloads_series_size',
+              'sensor.telegraf_ultron_media_cartoons_series_size'
             ] %}
             {{ sources | map('states') | map('float', 0) | sum | round(2) }}

@@ -5,7 +5,7 @@ ultron_metrics:
       username: !secret influxdb_username
       password: !secret influxdb_password
       queries:
-        - name: Ultron CPU Temperature
+        - name: Telegraf Ultron CPU Temperature
           unit_of_measurement: °C
           value_template: "{{ value }}"
           group_function: last
@@ -14,7 +14,7 @@ ultron_metrics:
           field: temp
           database: homelab_telegraf
 
-        - name: Ultron CPU usage
+        - name: Telegraf Ultron CPU usage
           unit_of_measurement: "%"
           value_template: "{{ ( value | float * (-1) | float + 100 )| round(2) }}"
           group_function: last
@@ -23,7 +23,7 @@ ultron_metrics:
           field: usage_idle
           database: homelab_telegraf
 
-        - name: Ultron iGPU usage
+        - name: Telegraf Ultron iGPU usage
           unit_of_measurement: "%"
           value_template: "{{ value | round(2) }}"
           group_function: last
@@ -32,7 +32,7 @@ ultron_metrics:
           field: intel_gpu_util
           database: homelab_telegraf
 
-        - name: Ultron RAM usage
+        - name: Telegraf Ultron RAM usage
           unit_of_measurement: "%"
           value_template: "{{ value | round(2) }}"
           group_function: last
@@ -41,7 +41,7 @@ ultron_metrics:
           field: used_percent
           database: homelab_telegraf
 
-        - name: Ultron SWAP usage
+        - name: Telegraf Ultron SWAP usage
           unit_of_measurement: "%"
           value_template: "{{ value | round(2) }}"
           group_function: last
@@ -50,7 +50,7 @@ ultron_metrics:
           field: used_percent
           database: homelab_telegraf
 
-        - name: Ultron Parity Disk Temperature
+        - name: Telegraf Ultron Parity Disk Temperature
           unit_of_measurement: °C
           value_template: "{{ value | round(2) }}"
           group_function: last
@@ -59,7 +59,7 @@ ultron_metrics:
           field: temp_c
           database: homelab_telegraf
 
-        - name: Ultron Parity Disk State
+        - name: Telegraf Ultron Parity Disk State
           value_template: "{{ value }}"
           group_function: last
           where: '"serial_no" = ''9MGWL7YJ'' AND "host" = ''ultron'''
@@ -67,7 +67,7 @@ ultron_metrics:
           field: state
           database: homelab_telegraf
 
-        - name: Ultron Disk 1 Temperature
+        - name: Telegraf Ultron Disk 1 Temperature
           unit_of_measurement: °C
           value_template: "{{ value | round(2) }}"
           group_function: last
@@ -76,7 +76,7 @@ ultron_metrics:
           field: temp_c
           database: homelab_telegraf
 
-        - name: Ultron Disk 1 State
+        - name: Telegraf Ultron Disk 1 State
           value_template: "{{ value }}"
           group_function: last
           where: '"serial_no" = ''9KGVHS3L'' AND "host" = ''ultron'''
@@ -84,7 +84,7 @@ ultron_metrics:
           field: state
           database: homelab_telegraf
 
-        - name: Ultron Disk 2 Temperature
+        - name: Telegraf Ultron Disk 2 Temperature
           unit_of_measurement: °C
           value_template: "{{ value | round(2) }}"
           group_function: last
@@ -93,7 +93,7 @@ ultron_metrics:
           field: temp_c
           database: homelab_telegraf
 
-        - name: Ultron Disk 2 State
+        - name: Telegraf Ultron Disk 2 State
           value_template: "{{ value }}"
           group_function: last
           where: '"serial_no" = ''Y5KU0P3C'' AND "host" = ''ultron'''
@@ -101,7 +101,7 @@ ultron_metrics:
           field: state
           database: homelab_telegraf
 
-        - name: Ultron Disk 3 Temperature
+        - name: Telegraf Ultron Disk 3 Temperature
           unit_of_measurement: °C
           value_template: "{{ value | round(2) }}"
           group_function: last
@@ -110,7 +110,7 @@ ultron_metrics:
           field: temp_c
           database: homelab_telegraf
 
-        - name: Ultron Disk 3 State
+        - name: Telegraf Ultron Disk 3 State
           value_template: "{{ value }}"
           group_function: last
           where: '"serial_no" = ''T1G634XN'' AND "host" = ''ultron'''
@@ -118,7 +118,7 @@ ultron_metrics:
           field: state
           database: homelab_telegraf
 
-        - name: Ultron Cache Temperature
+        - name: Telegraf Ultron Cache Temperature
           unit_of_measurement: °C
           value_template: "{{ value | round(2) }}"
           group_function: last
@@ -127,7 +127,7 @@ ultron_metrics:
           field: temp_c
           database: homelab_telegraf
 
-        - name: Ultron Cache 2 Temperature
+        - name: Telegraf Ultron Cache 2 Temperature
           unit_of_measurement: °C
           value_template: "{{ value | round(2) }}"
           group_function: last
@@ -136,7 +136,7 @@ ultron_metrics:
           field: temp_c
           database: homelab_telegraf
 
-        - name: Ultron Network In Total
+        - name: Telegraf Ultron Network In Total
           unit_of_measurement: "MB"
           value_template: "{{ value | float / 1000000 | round(2) }}"
           group_function: last
@@ -145,7 +145,7 @@ ultron_metrics:
           field: bytes_recv
           database: homelab_telegraf
 
-        - name: Ultron Network Out Total
+        - name: Telegraf Ultron Network Out Total
           unit_of_measurement: "MB"
           value_template: "{{ value | float / 1000000 | round(2) }}"
           group_function: last
@@ -155,16 +155,16 @@ ultron_metrics:
           database: homelab_telegraf
 
     - platform: derivative
-      source: sensor.ultron_network_in_total
-      name: Ultron Network In Speed
+      source: sensor.telegraf_ultron_network_in_total
+      name: Telegraf Ultron Network In Speed
       round: 2
       unit_time: s
       #unit: MB/s
       time_window: "00:00:01"
 
     - platform: derivative
-      source: sensor.ultron_network_out_total
-      name: Ultron Network Out Speed
+      source: sensor.telegraf_ultron_network_out_total
+      name: Telegraf Ultron Network Out Speed
       round: 2
       unit_time: s
       #unit: MB/s

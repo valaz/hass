@@ -6,40 +6,35 @@ ultron_parity:
       username: !secret influxdb_username
       password: !secret influxdb_password
       queries:
-        - name: "Ultron Parity Common Size Raw"
-          unique_id: ultron_parity_common_size_raw
+        - name: "Telegraf Ultron Parity Common Size Raw"
           value_template: "{{ value }}"
           group_function: last
           where: '"host" = ''ultron'''
           measurement: '"mdcmd"'
           field: mdResyncSize
           database: homelab_telegraf
-        - name: "Ultron Parity Size Raw"
-          unique_id: ultron_parity_size_raw
+        - name: "Telegraf Ultron Parity Size Raw"
           value_template: "{{ value }}"
           group_function: last
           where: '"host" = ''ultron'''
           measurement: '"mdcmd"'
           field: mdResync
           database: homelab_telegraf
-        - name: "Ultron Parity Pos Raw"
-          unique_id: ultron_parity_pos_raw
+        - name: "Telegraf Ultron Parity Pos Raw"
           value_template: "{{ value }}"
           group_function: last
           where: '"host" = ''ultron'''
           measurement: '"mdcmd"'
           field: mdResyncPos
           database: homelab_telegraf
-        - name: "Ultron Parity Dt Raw"
-          unique_id: ultron_parity_dt_raw
+        - name: "Telegraf Ultron Parity Dt Raw"
           value_template: "{{ value }}"
           group_function: last
           where: '"host" = ''ultron'''
           measurement: '"mdcmd"'
           field: mdResyncDt
           database: homelab_telegraf
-        - name: "Ultron Parity Db Raw"
-          unique_id: ultron_parity_db_raw
+        - name: "Telegraf Ultron Parity Db Raw"
           value_template: "{{ value }}"
           group_function: last
           where: '"host" = ''ultron'''
@@ -49,7 +44,7 @@ ultron_parity:
 
   template:
     - binary_sensor:
-        - name: "Ultron Parity Check In Progress"
+        - name: "Telegraf Ultron Parity Check In Progress"
           device_class: running
           state: >-
             {% set progress = states('sensor.ultron_parity_progress') | float(0) %}
@@ -57,7 +52,7 @@ ultron_parity:
           availability: >-
             {{ states('sensor.ultron_parity_progress') not in ['unknown', 'unavailable', 'none'] }}
 
-        - name: "Ultron Parity Check Paused"
+        - name: "Telegraf Ultron Parity Check Paused"
           state: >-
             {% set in_progress = is_state('binary_sensor.ultron_parity_check_in_progress', 'on') %}
             {% set size_is_zero = (states('sensor.ultron_parity_size_raw') | int(0)) == 0 %}
@@ -68,7 +63,7 @@ ultron_parity:
             {{ valid_size and valid_in_progress }}
 
     - sensor:
-        - name: "Ultron Parity Progress"
+        - name: "Telegraf Ultron Parity Progress"
           unit_of_measurement: "%"
           state_class: measurement
           state: >-
@@ -90,7 +85,7 @@ ultron_parity:
             {% set valid_parity_pos = states('sensor.ultron_parity_pos_raw') | int(-1) >= 0 %}
             {{ valid_parity_common_size and valid_parity_size and valid_parity_pos }}
 
-        - name: "Ultron Parity Speed"
+        - name: "Telegraf Ultron Parity Speed"
           device_class: data_rate
           unit_of_measurement: "MB/s"
           state_class: measurement
@@ -107,7 +102,7 @@ ultron_parity:
             {% set valid_parity_dt = states('sensor.ultron_parity_dt_raw') | int(-1) >= 0 %}
             {{ valid_parity_db and valid_parity_dt }}
 
-        - name: "Ultron Parity Finish Timestamp"
+        - name: "Telegraf Ultron Parity Finish Timestamp"
           device_class: timestamp
           state: >-
             {% set parity_db = states('sensor.ultron_parity_db_raw') | float(0) %}
@@ -120,7 +115,7 @@ ultron_parity:
             {% set valid_parity_db = states('sensor.ultron_parity_db_raw') | int(0) > 0 %}
             {% set valid_parity_size = states('sensor.ultron_parity_size_raw') | int(0) > 0 %}
             {{ valid_parity_db and valid_parity_size }}
-        - name: "Ultron Parity Status"
+        - name: "Telegraf Ultron Parity Status"
           state: >-
             {% set in_progress = is_state('binary_sensor.ultron_parity_check_in_progress', 'on') %}
             {% set paused = is_state('binary_sensor.ultron_parity_check_paused', 'on') %}

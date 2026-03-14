@@ -144,7 +144,7 @@ sections:
 
       - graph: line
         type: sensor
-        entity: sensor.ultron_media_movies_total_size
+        entity: sensor.telegraf_ultron_media_movies_total_size
         detail: 2
         name: Disk Space
         grid_options:
@@ -157,7 +157,7 @@ sections:
         icon: mdi:movie
         badges:
           - type: entity
-            entity: sensor.ultron_media_movies_size
+            entity: sensor.telegraf_ultron_media_movies_size
             color: green
             show_icon: false
             tap_action:
@@ -169,7 +169,7 @@ sections:
         icon: mdi:movie
         badges:
           - type: entity
-            entity: sensor.ultron_media_downloads_movies_size
+            entity: sensor.telegraf_ultron_media_downloads_movies_size
             color: green
             show_icon: false
             tap_action:
@@ -181,7 +181,7 @@ sections:
         icon: mdi:movie
         badges:
           - type: entity
-            entity: sensor.ultron_media_cartoons_movies_size
+            entity: sensor.telegraf_ultron_media_cartoons_movies_size
             color: green
             show_icon: false
             tap_action:
@@ -193,7 +193,7 @@ sections:
         icon: mdi:movie
         badges:
           - type: entity
-            entity: sensor.ultron_media_travel_movies_size
+            entity: sensor.telegraf_ultron_media_travel_movies_size
             color: green
             show_icon: false
             tap_action:
@@ -232,7 +232,7 @@ sections:
 
       - graph: line
         type: sensor
-        entity: sensor.ultron_media_series_total_size
+        entity: sensor.telegraf_ultron_media_series_total_size
         detail: 2
         name: Disk Space
         grid_options:
@@ -245,7 +245,7 @@ sections:
         icon: mdi:television
         badges:
           - type: entity
-            entity: sensor.ultron_media_series_size
+            entity: sensor.telegraf_ultron_media_series_size
             color: green
             show_icon: false
             tap_action:
@@ -257,7 +257,7 @@ sections:
         icon: mdi:television
         badges:
           - type: entity
-            entity: sensor.ultron_media_downloads_series_size
+            entity: sensor.telegraf_ultron_media_downloads_series_size
             color: green
             show_icon: false
             tap_action:
@@ -269,7 +269,7 @@ sections:
         icon: mdi:television
         badges:
           - type: entity
-            entity: sensor.ultron_media_cartoons_series_size
+            entity: sensor.telegraf_ultron_media_cartoons_series_size
             color: green
             show_icon: false
             tap_action:
@@ -281,7 +281,7 @@ sections:
         icon: mdi:television
         badges:
           - type: entity
-            entity: sensor.ultron_media_travel_series_size
+            entity: sensor.telegraf_ultron_media_travel_series_size
             color: green
             show_icon: false
             tap_action:
