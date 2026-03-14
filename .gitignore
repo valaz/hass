@@ -12,7 +12,6 @@
 .cloud
 .google.token
 .omv_cookies.json
-.ha_run.lock
 
 home-assistant.log
 home-assistant_v2.db
