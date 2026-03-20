@@ -38,6 +38,7 @@ zigbee2mqtt/*
 tts/*
 node-red/*
 .storage/*
+.cache/*
 custom_components/*
 www/*
 .ha_run.lock
