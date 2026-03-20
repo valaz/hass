@@ -12,8 +12,14 @@ homeassistant:
 default_config:
 
 lovelace:
-  mode: yaml
+  resource_mode: yaml
   dashboards:
+    lovelace:
+      mode: yaml
+      filename: ui-lovelace.yaml
+      title: Overview
+      icon: mdi:view-dashboard
+      show_in_sidebar: true
     hass-ui:
       mode: yaml
       title: Hass
@@ -100,50 +106,3 @@ http:
     - 192.168.1.34
     - 192.168.1.39
     - 192.168.1.41
-
-influxdb:
-  api_version: 1
-  max_retries: 5
-  default_measurement: state
-  host: !secret influxdb_host
-  port: !secret influxdb_port
-  username: !secret influxdb_username
-  password: !secret influxdb_password
-  database: !secret influxdb_database
-  component_config:
-    sensor.xiaomi_air_purifier_2s_pm2_5:
-      override_measurement: aqi
-    sensor.omv_sdc:
-      override_measurement: drive
-  component_config_glob:
-    sensor.*humidity:
-      override_measurement: humidity
-    sensor.*temperature:
-      override_measurement: temperature
-    sensor.*battery*:
-      override_measurement: battery
-    sensor.*power*:
-      override_measurement: energy
-    sensor.*energy*:
-      override_measurement: energy
-  tags_attributes:
-    - room
-    - type
-    - friendly_name
-
-pi_hole:
-  host: 192.168.1.42
-  api_key: !secret pi_hole_api_key
-
-proxmoxve:
-  - host: !secret proxmox.ip
-    verify_ssl: false
-    username: !secret proxmox.username
-    password: !secret proxmox.password
-    nodes:
-      - node: heimdall
-        vms:
-          - 101
-          - 133
-        containers:
-          - 102
