@@ -19,28 +19,28 @@ sections:
             show_icon: true
             icon: mdi:cpu-64-bit
             color: orange
-            entity: sensor.192_168_1_11_package_id_0_temperature
+            entity: sensor.ultron_api_cpu_temperature
             tap_action:
               action: more-info
           - type: entity
             show_icon: false
             icon: mdi:cpu-64-bit
             color: orange
-            entity: sensor.192_168_1_11_cpu_usage
+            entity: sensor.ultron_api_cpu_utilization
             tap_action:
               action: more-info
           - type: entity
             show_icon: true
             icon: mdi:chip
             color: blue
-            entity: sensor.192_168_1_11_memory_usage
+            entity: sensor.ultron_api_ram_usage
             tap_action:
               action: more-info
           - type: entity
             show_icon: true
             icon: mdi:harddisk
             color: green
-            entity: sensor.192_168_1_11_disk_usage
+            entity: sensor.ultron_api_array_usage
             tap_action:
               action: more-info
 
@@ -149,7 +149,7 @@ sections:
         icon: mdi:check-all
         badges:
           - type: entity
-            entity: sensor.telegraf_ultron_parity_status
+            entity: sensor.ultron_api_parity_check
             color: blue
             tap_action:
               action: more-info
@@ -197,7 +197,7 @@ sections:
             show_icon: true
             color: orange
             icon: mdi:thermometer
-            entity: sensor.telegraf_ultron_cache_temperature
+            entity: sensor.ultron_api_cache_temperature
             tap_action:
               action: more-info
           - type: entity
@@ -205,24 +205,24 @@ sections:
             icon: mdi:thermometer
             show_icon: true
             color: orange
-            entity: sensor.telegraf_ultron_cache_2_temperature
+            entity: sensor.ultron_api_cache2_temperature
             tap_action:
               action: more-info
           - type: entity
             show_state: true
             show_icon: true
-            entity: sensor.192_168_1_11_rootfs_cache_disk_usage
+            entity: sensor.ultron_api_cache_usage
             tap_action:
               action: more-info
       - type: tile
-        entity: sensor.192_168_1_11_rootfs_cache_disk_used
+        entity: sensor.ultron_cache_used_space
         features_position: bottom
         vertical: false
         name: Used
         show_entity_picture: false
         color: red
       - type: tile
-        entity: sensor.192_168_1_11_rootfs_cache_disk_free
+        entity: sensor.ultron_cache_free_space
         features_position: bottom
         vertical: false
         name: Free
@@ -239,7 +239,7 @@ sections:
             show_icon: true
             color: orange
             icon: mdi:thermometer
-            entity: sensor.telegraf_ultron_parity_disk_temperature
+            entity: sensor.ultron_api_parity_temperature
             tap_action:
               action: more-info
           - type: entity
@@ -247,7 +247,7 @@ sections:
             show_icon: true
             color: orange
             icon: mdi:thermometer
-            entity: sensor.telegraf_ultron_disk_1_temperature
+            entity: sensor.ultron_api_disk1_temperature
             tap_action:
               action: more-info
           - type: entity
@@ -255,24 +255,24 @@ sections:
             show_icon: true
             icon: mdi:thermometer
             color: orange
-            entity: sensor.telegraf_ultron_disk_2_temperature
+            entity: sensor.ultron_api_disk2_temperature
             tap_action:
               action: more-info
           - type: entity
             show_state: true
             show_icon: true
-            entity: sensor.c_192_168_1_11_rootfs_array_disk_usage
+            entity: sensor.ultron_api_array_usage
             tap_action:
               action: more-info
       - type: tile
-        entity: sensor.c_192_168_1_11_rootfs_array_disk_used
+        entity: sensor.ultron_array_used_space
         features_position: bottom
         vertical: false
         name: Used
         show_entity_picture: false
         color: red
       - type: tile
-        entity: sensor.c_192_168_1_11_rootfs_array_disk_free
+        entity: sensor.ultron_api_backups_free_space
         features_position: bottom
         vertical: false
         name: Free
@@ -289,24 +289,24 @@ sections:
             show_icon: true
             color: orange
             icon: mdi:thermometer
-            entity: sensor.telegraf_ultron_disk_1_temperature
+            entity: sensor.ultron_api_disk1_temperature
             tap_action:
               action: more-info
           - type: entity
             show_state: true
             show_icon: true
-            entity: sensor.192_168_1_11_rootfs_disk1_disk_usage
+            entity: sensor.ultron_api_disk1_usage
             tap_action:
               action: more-info
       - type: tile
-        entity: sensor.192_168_1_11_rootfs_disk1_disk_used
+        entity: sensor.ultron_disk1_used_space
         features_position: bottom
         vertical: false
         name: Used
         show_entity_picture: false
         color: red
       - type: tile
-        entity: sensor.192_168_1_11_rootfs_disk1_disk_free
+        entity: sensor.ultron_disk1_free_space
         features_position: bottom
         vertical: false
         name: Free
@@ -323,24 +323,24 @@ sections:
             show_icon: true
             icon: mdi:thermometer
             color: orange
-            entity: sensor.telegraf_ultron_disk_2_temperature
+            entity: sensor.ultron_api_disk2_temperature
             tap_action:
               action: more-info
           - type: entity
             show_state: true
             show_icon: true
-            entity: sensor.192_168_1_11_rootfs_disk2_disk_usage
+            entity: sensor.ultron_api_disk2_usage
             tap_action:
               action: more-info
       - type: tile
-        entity: sensor.192_168_1_11_rootfs_disk2_disk_used
+        entity: sensor.ultron_disk2_used_space
         features_position: bottom
         vertical: false
         name: Used
         show_entity_picture: false
         color: red
       - type: tile
-        entity: sensor.192_168_1_11_rootfs_disk2_disk_free
+        entity: sensor.ultron_disk2_free_space
         features_position: bottom
         vertical: false
         name: Free
@@ -357,24 +357,24 @@ sections:
             show_icon: true
             icon: mdi:thermometer
             color: orange
-            entity: sensor.telegraf_ultron_disk_3_temperature
+            entity: sensor.ultron_api_disk3_temperature
             tap_action:
               action: more-info
           - type: entity
             show_state: true
             show_icon: true
-            entity: sensor.192_168_1_11_rootfs_disk3_disk_usage
+            entity: sensor.ultron_api_disk2_usage
             tap_action:
               action: more-info
       - type: tile
-        entity: sensor.192_168_1_11_rootfs_disk3_disk_used
+        entity: sensor.ultron_disk2_used_space
         features_position: bottom
         vertical: false
         name: Used
         show_entity_picture: false
         color: red
       - type: tile
-        entity: sensor.192_168_1_11_rootfs_disk3_disk_free
+        entity: sensor.ultron_disk2_free_space
         features_position: bottom
         vertical: false
         name: Free
